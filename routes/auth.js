@@ -20,12 +20,12 @@ router.post('/authentication', function (req, res, next) {
     //if user not found
     if (rows.length <= 0) {
       req.flash('error', '아이디와 비밀번호를 정확히 입력해주세요');
-      res.redirect('/auth/login');
+      res.redirect('/admin/login');
     } else {//if user found
       // render to views/index.ejs template file
       req.session.loggedin = true;
       req.session.name = name;
-      res.redirect('/');
+      res.redirect('/admin');
     }
   });
 });
