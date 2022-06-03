@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<title><%= title %></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<style>
+  body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+<body>
+  <div class="topnav">
+    <a class="active" href="#home">O-Car Administrator</a>
+    <a href="#news">News</a>
+    <a href="#contact">Contact</a>
+    <a href="/admin">List</a>
+  </div>
+
+<div id="list" class="w3-container">
+  <h2>List User Table</h2>
+
+  <table class="w3-table w3-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>User ID Name</th>
+        <th>Password</th>
+        <th>Email</th>
+        <th>Address</th>
+        <th>Phone Number</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(let i = 0; i < rows.length; i++) { %>
+        <tr>
+          <td><%= rows[i].id %></td>
+          <td><%= rows[i].userName %></td>
+          <td><%= rows[i].userID %></td>
+          <td><%= rows[i].password %></td>
+          <td><%= rows[i].email %></td>
+          <td><%= rows[i].address %></td>
+          <td><%= rows[i].phoneNum %></td>
+          <td>
+            <a href="/admin/detail/user/<%= rows[i].id %>" target="_blank">Detail</a>
+            <button type="button">Edit</button>
+            <form action="/admin/delete-user" method="post">
+              <input type="text" hidden value="<%= rows[i].id %>" name="id">
+              <button type="submit">Delete</button>
+            </form>
+          </td>
+        </tr>   
+      <% } %>
+    </tbody>
+  </table>
+</div>
+<div>
+  <br>
+  <a href="/admin/login" class="btn btn-success ml-2">로그아웃</a>
+</div>
+
+</body>
+</html>

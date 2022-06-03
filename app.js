@@ -12,6 +12,7 @@ var connection = require('./models/database');
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
+var adminRouter = require('./routes/admin');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use(flash());
 
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
+app.use('/admin', adminRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
