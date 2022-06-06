@@ -64,15 +64,19 @@ router.post('/post-register', function (req, res, next) {
 
 //display home page
 router.get('/', function (req, res, next) {
-  if (req.session.loggedin) {
-    res.render('index', {
-      title: "O-car",
-      name: req.session.name,
-    });
-  } else {
-    req.flash('success', '먼저 로그인을 해주세요!');
-    res.redirect('/auth/login');
-  }
+  res.render('index', {
+    title: "O-car",
+    name: req.session.name,
+  });
+
+  /* Check Login*/
+
+  // if (req.session.loggedin) {
+
+  // } else {
+  //   req.flash('success', '먼저 로그인을 해주세요!');
+  //   res.redirect('/auth/login');
+  // }
 });
 
 // Logout user
