@@ -15,7 +15,9 @@ router.post('/authentication', function (req, res, next) {
   var userID = req.body.userID;
   var password = req.body.password;
 
-  connection.query('SELECT * FROM users WHERE userID =? AND password =?', [userID, password], function (err, rows, fields) {
+  var sql = "SELECT * FROM user WHERE user_id =? AND user_pw =?";
+
+  connection.query(sql, [userID, password], function (err, rows, fields) {
     if (err) throw err;
     //if user not found
     if (rows.length <= 0) {
@@ -52,7 +54,9 @@ router.post('/post-register', function (req, res, next) {
   var phoneNum = req.body.phoneNum;
   var datas = [userName, userID, password, email, address, phoneNum];
 
-  connection.query("INSERT INTO users(userName, userID, password, email, address, phoneNum) values(?,?,?,?,?,?)", datas, function (err, result) {
+  var sql = "INSERT INTO user(user_name, user_id, user_pw, user_email, user_address, user_phone) values(?,?,?,?,?,?)";
+
+  connection.query(sql, datas, function (err, result) {
     //if(err) throw err
     if (err) console.error("err : " + err)
     else {

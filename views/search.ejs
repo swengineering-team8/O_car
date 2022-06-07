@@ -173,8 +173,9 @@
             <% if (rows.length > 0) { %>
                 <% for(let i = 0; i < rows.length; i++) { %>
                 <tr>
-                <td><%= rows[i].title %></td>
-                <td><%= rows[i].content %></td>
+                <td><%= rows[i].car_title %></td>
+                <td><%= rows[i].car_info %></td>
+                <!-- img 관련 소스 추가 예정 -->
                 <td><img src="<%= rows[i].image %>" alt="이미지" width="300"></td>
                 </tr>   
                 <% } %>
