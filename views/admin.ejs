@@ -54,7 +54,7 @@
     <thead>
       <tr>
         <th>Name</th>
-        <th>User ID Name</th>
+        <th>User ID</th>
         <th>Password</th>
         <th>Email</th>
         <th>Address</th>
@@ -74,7 +74,7 @@
             <a href="/admin/detail/user/<%= rows[i].user_name %>" target="_blank">Detail</a>
             <button type="button">Edit</button>
             <form action="/admin/delete-user" method="post">
-              <input type="text" hidden value="<%= rows[i].id %>" name="id">
+              <input type="text" hidden value="<%= rows[i].user_id %>" name="id">
               <button type="submit">Delete</button>
             </form>
           </td>

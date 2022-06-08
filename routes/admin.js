@@ -6,6 +6,7 @@ var connection = require('../models/database');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    var sql = 'SELECT * FROM user';
     if (req.session.loggedin == true) {
         connection.query('SELECT * FROM user', function (err, rows) {
             if (err) console.error("err : " + err);
@@ -57,7 +58,7 @@ router.post('/delete-user', function (req, res, next) {
     var sql = "DELETE FROM users WHERE user_name = ?";
     connection.query(sql, [user_name], function (err, row) {
         if (err) console.error(err);
-        console.log("삭제된 회윈 : ", row);
+        console.log("삭제된 회윈 : ", id);
         res.redirect('/admin');
     });
 });
