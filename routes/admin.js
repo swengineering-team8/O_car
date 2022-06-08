@@ -53,13 +53,20 @@ router.get('/detail/user/:user_name', function (req, res, next) {
 });
 
 router.post('/delete-user', function (req, res, next) {
-    var id = req.body.id;
-    var sql = "DELETE FROM users WHERE id = ?";
-    connection.query(sql, [id], function (err, row) {
+    var user_name = req.body.user_name;
+    var sql = "DELETE FROM users WHERE user_name = ?";
+    connection.query(sql, [user_name], function (err, row) {
         if (err) console.error(err);
         console.log("삭제된 회윈 : ", row);
         res.redirect('/admin');
     });
+});
+
+// Logout user
+router.get('/logout', function (req, res) {
+    req.session.destroy();
+    req.flash('success', '여기에서 다시 로그인해 주세요!');
+    res.redirect('/admin/login');
 });
 
 module.exports = router;

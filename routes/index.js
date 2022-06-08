@@ -20,13 +20,21 @@ var upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-  res.render('index', { title: 'O-Car' });
+  var sql = "SELECT * FROM car";
+  connection.connect(function (err) {
+    if (err) console.log("err: ", err);
+    connection.query(sql, function (err, rows) {
+      if (err) console.log("err: ", err);
+      res.render('index', { title: 'O-Car', rows: rows });
+    });
+
+  });
 });
 
 router.get('/search', function (req, res) {
   var title = req.query.title;
 
-  var sql = "SELECT * FROM car WHERE title LIKE '%" + title + "%'";
+  var sql = "SELECT * FROM car WHERE car_title LIKE '%" + title + "%'";
 
   connection.connect(function (err) {
     if (err) console.log("err: ", err);

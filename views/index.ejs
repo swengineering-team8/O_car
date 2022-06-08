@@ -73,22 +73,22 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link active" href="/buy">구입</a>
+                <a class="nav-link active" href="/auth">구입</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/buy/sedan">세단</a>
+                <a class="nav-link" href="/auth/buy/sedan">세단</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/buy/suv">SUV</a>
+                <a class="nav-link" href="/auth/buy/suv">SUV</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/buy/sport">스포츠</a>
+                <a class="nav-link" href="/auth/buy/sport">스포츠</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/buy/truck">화물</a>
+                <a class="nav-link" href="/auth/buy/truck">화물</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/sell">판매</a>
+                <a class="nav-link active" href="/auth/sell">판매</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link active" href="/search">시세 조회</a>
@@ -97,8 +97,8 @@
             <form action="/search" class="d-flex" role="search">
               <input class="form-control me-2" type="search" name="title" placeholder="모델명" aria-label="Search">
               <button class="btn btn-outline-success me-2" type="submit">Search</button>
-              <a href="/auth/login" class="btn btn-success">Login</a>
             </form>
+            <a href="/auth/login" class="btn btn-success">Login</a>
           </div>
         </div>
       </nav>
@@ -163,21 +163,16 @@
     
         <!-- Three columns of text below the carousel -->
         <div class="row">
-          <div class="col-lg-4">
-            <img class="bd-placeholder-img mb-2" height="140" src="/images/parisade.png" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></img>
-            <h3 class="fw-normal mb-2">Parisade</h3>
-            <p><a class="btn btn-secondary" href="/search?title=parisade">자세히 보기 &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4">
-            <img class="bd-placeholder-img mb-2" height="140" src="/images/grandeur.png" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></img>
-            <h3 class="fw-normal mb-2">Grandeur</h3>
-            <p><a class="btn btn-secondary" href="/search?title=grandeur">자세히 보기 &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
-          <div class="col-lg-4">
-            <img class="bd-placeholder-img mb-2" height="140" src="/images/sonata.png" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></img>
-            <h3 class="fw-normal mb-2">Sonata</h3>
-            <p><a class="btn btn-secondary" href="/search?title=sonata">자세히 보기 &raquo;</a></p>
-          </div><!-- /.col-lg-4 -->
+          <% for(let i = 0; i < rows.length; i++) { %>
+            <div class="col-lg-4">
+              <img class="bd-placeholder-img mb-2" height="140" src="<%= rows[i].image %>" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></img>
+              <h3 class="fw-normal mb-2"><%= rows[i].car_title %></h3>
+              <form action="/auth/buy" method="get">
+                <input type="hidden" name="car_id" id="car_id" value="<%= rows[i].car_id %>">
+                <p><button type="submit" class="btn btn-secondary">자세히 보기 &raquo;</button></p>
+              </form>
+            </div><!-- /.col-lg-4 -->
+          <% } %>
         </div><!-- /.row -->
     
       </div><!-- /.container -->
