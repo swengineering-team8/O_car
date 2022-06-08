@@ -6,8 +6,9 @@ var connection = require('../models/database');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+    var sql = 'SELECT * FROM user';
     if (req.session.loggedin == true) {
-        connection.query('SELECT * FROM users', function (err, rows) {
+        connection.query(sql, function (err, rows) {
             if (err) console.error("err : " + err);
             console.log("rows : " + JSON.stringify(rows));
             res.render('admin', { title: 'Administrator Page', rows: rows });
@@ -44,7 +45,7 @@ router.post('/authentication', function (req, res, next) {
 /* Get User Page*/
 router.get('/detail/user/:id', function (req, res, next) {
     var id = req.params.id;
-    var sql = "SELECT * FROM users WHERE id =?";
+    var sql = "SELECT * FROM user WHERE user_id =?";
     connection.query(sql, [id], function (err, row) {
         if (err) console.error(err);
         console.log("조회 결과 확인 : ", row);
@@ -54,10 +55,10 @@ router.get('/detail/user/:id', function (req, res, next) {
 
 router.post('/delete-user', function (req, res, next) {
     var id = req.body.id;
-    var sql = "DELETE FROM users WHERE id = ?";
+    var sql = "DELETE FROM user WHERE user_id = ?";
     connection.query(sql, [id], function (err, row) {
         if (err) console.error(err);
-        console.log("삭제된 회윈 : ", row);
+        console.log("삭제된 회윈 : ", id);
         res.redirect('/admin');
     });
 });
