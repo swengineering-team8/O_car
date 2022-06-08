@@ -4,10 +4,12 @@ var router = express.Router();
 var connection = require('../models/database');
 
 
+
+
 /* GET users listing. */
 //display login page
 router.get('/login', function (req, res, next) {
-  res.render('login', { title: 'Login', email: '', password: '' })
+  res.render('login', { title: 'Login', userID: '', password: '' })
 });
 
 //authenticate user
@@ -15,7 +17,7 @@ router.post('/authentication', function (req, res, next) {
   var userID = req.body.userID;
   var password = req.body.password;
 
-  connection.query('SELECT * FROM users WHERE userID =? AND password =?', [userID, password], function (err, rows, fields) {
+  connection.query('SELECT * FROM user WHERE user_id =? AND user_pw =?', [userID, password], function (err, rows, fields) {
     if (err) throw err;
     //if user not found
     if (rows.length <= 0) {
@@ -36,7 +38,7 @@ router.get('/register', function (req, res, next) {
   res.render('register', {
     title: 'Registration Page',
     name: '',
-    email: '',
+    userID: '',
     password: ''
   });
 });
@@ -50,9 +52,13 @@ router.post('/post-register', function (req, res, next) {
   var email = req.body.email;
   var address = req.body.address;
   var phoneNum = req.body.phoneNum;
-  var datas = [userName, userID, password, email, address, phoneNum];
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+  var DateTime = date + ' ' + time;
+  var datas = [userID, userName, password, phoneNum, email, address, DateTime];
 
-  connection.query("INSERT INTO users(userName, userID, password, email, address, phoneNum) values(?,?,?,?,?,?)", datas, function (err, result) {
+  connection.query("INSERT INTO user(user_id, user_name, user_pw, user_phone, user_email, user_address, created_date) values(?,?,?,?,?,?,?)", datas, function (err, result) {
     //if(err) throw err
     if (err) console.error("err : " + err)
     else {

@@ -7,7 +7,7 @@ var connection = require('../models/database');
 /* GET home page. */
 router.get('/', function (req, res, next) {
     if (req.session.loggedin == true) {
-        connection.query('SELECT * FROM users', function (err, rows) {
+        connection.query('SELECT * FROM user', function (err, rows) {
             if (err) console.error("err : " + err);
             console.log("rows : " + JSON.stringify(rows));
             res.render('admin', { title: 'Administrator Page', rows: rows });
@@ -19,7 +19,7 @@ router.get('/', function (req, res, next) {
 
 /* GET Login page. */
 router.get('/login', function (req, res, next) {
-    res.render('adminLogin', { title: 'Administrator Login', email: '', password: '' });
+    res.render('adminLogin', { title: 'Administrator Login', userID: '', password: '' });
     req.session.loggedin = false;
 });
 
@@ -42,10 +42,10 @@ router.post('/authentication', function (req, res, next) {
 });
 
 /* Get User Page*/
-router.get('/detail/user/:id', function (req, res, next) {
-    var id = req.params.id;
-    var sql = "SELECT * FROM users WHERE id =?";
-    connection.query(sql, [id], function (err, row) {
+router.get('/detail/user/:user_name', function (req, res, next) {
+    var user_name = req.params.user_name;
+    var sql = "SELECT * FROM user WHERE user_name = ?";
+    connection.query(sql, [user_name], function (err, row) {
         if (err) console.error(err);
         console.log("조회 결과 확인 : ", row);
         res.render('detail', { title: "회원 조회", row: row[0] });

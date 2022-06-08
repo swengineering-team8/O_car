@@ -53,7 +53,6 @@
   <table class="w3-table w3-striped">
     <thead>
       <tr>
-        <th>ID</th>
         <th>Name</th>
         <th>User ID Name</th>
         <th>Password</th>
@@ -65,15 +64,14 @@
     <tbody>
       <% for(let i = 0; i < rows.length; i++) { %>
         <tr>
-          <td><%= rows[i].id %></td>
-          <td><%= rows[i].userName %></td>
-          <td><%= rows[i].userID %></td>
-          <td><%= rows[i].password %></td>
-          <td><%= rows[i].email %></td>
-          <td><%= rows[i].address %></td>
-          <td><%= rows[i].phoneNum %></td>
+          <td><%= rows[i].user_name %></td>
+          <td><%= rows[i].user_id %></td>
+          <td><%= rows[i].user_pw %></td>
+          <td><%= rows[i].user_email %></td>
+          <td><%= rows[i].user_address %></td>
+          <td><%= rows[i].user_phone %></td>
           <td>
-            <a href="/admin/detail/user/<%= rows[i].id %>" target="_blank">Detail</a>
+            <a href="/admin/detail/user/<%= rows[i].user_name %>" target="_blank">Detail</a>
             <button type="button">Edit</button>
             <form action="/admin/delete-user" method="post">
               <input type="text" hidden value="<%= rows[i].id %>" name="id">

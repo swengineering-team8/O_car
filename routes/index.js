@@ -26,7 +26,7 @@ router.get('/', function (req, res, next) {
 router.get('/search', function (req, res) {
   var title = req.query.title;
 
-  var sql = "SELECT * FROM board WHERE title LIKE '%" + title + "%'";
+  var sql = "SELECT * FROM car WHERE title LIKE '%" + title + "%'";
 
   connection.connect(function (err) {
     if (err) console.log("err: ", err);
