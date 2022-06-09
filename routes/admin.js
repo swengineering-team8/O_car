@@ -8,7 +8,7 @@ var connection = require('../models/database');
 router.get('/', function (req, res, next) {
     var sql = 'SELECT * FROM user';
     if (req.session.loggedin == true) {
-        connection.query(sql, function (err, rows) {
+        connection.query('SELECT * FROM user', function (err, rows) {
             if (err) console.error("err : " + err);
             console.log("rows : " + JSON.stringify(rows));
             res.render('admin', { title: 'Administrator Page', rows: rows });
@@ -20,7 +20,7 @@ router.get('/', function (req, res, next) {
 
 /* GET Login page. */
 router.get('/login', function (req, res, next) {
-    res.render('adminLogin', { title: 'Administrator Login', email: '', password: '' });
+    res.render('adminLogin', { title: 'Administrator Login', userID: '', password: '' });
     req.session.loggedin = false;
 });
 
@@ -43,10 +43,10 @@ router.post('/authentication', function (req, res, next) {
 });
 
 /* Get User Page*/
-router.get('/detail/user/:id', function (req, res, next) {
-    var id = req.params.id;
-    var sql = "SELECT * FROM user WHERE user_id =?";
-    connection.query(sql, [id], function (err, row) {
+router.get('/detail/user/:user_name', function (req, res, next) {
+    var user_name = req.params.user_name;
+    var sql = "SELECT * FROM user WHERE user_name = ?";
+    connection.query(sql, [user_name], function (err, row) {
         if (err) console.error(err);
         console.log("조회 결과 확인 : ", row);
         res.render('detail', { title: "회원 조회", row: row[0] });
@@ -54,13 +54,20 @@ router.get('/detail/user/:id', function (req, res, next) {
 });
 
 router.post('/delete-user', function (req, res, next) {
-    var id = req.body.id;
-    var sql = "DELETE FROM user WHERE user_id = ?";
-    connection.query(sql, [id], function (err, row) {
+    var user_name = req.body.user_name;
+    var sql = "DELETE FROM users WHERE user_name = ?";
+    connection.query(sql, [user_name], function (err, row) {
         if (err) console.error(err);
         console.log("삭제된 회윈 : ", id);
         res.redirect('/admin');
     });
+});
+
+// Logout user
+router.get('/logout', function (req, res) {
+    req.session.destroy();
+    req.flash('success', '여기에서 다시 로그인해 주세요!');
+    res.redirect('/admin/login');
 });
 
 module.exports = router;
