@@ -3,6 +3,7 @@ var router = express.Router();
 var connection = require('../models/database');
 var multer = require('multer');
 var path = require('path');
+const PoolResource = require('nodemailer/lib/smtp-pool/pool-resource');
 
 //Image loading
 var storage = multer.diskStorage({
@@ -74,16 +75,24 @@ router.post('/post-register', function (req, res, next) {
   var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
   var DateTime = date + ' ' + time;
 
-  var datas = [userID, userName, password, phoneNum, email, address, DateTime];
-
-  connection.query("INSERT INTO user(user_id, user_name, user_pw, user_phone, user_email, user_address, created_date) values(?,?,?,?,?,?,?)", datas, function (err, result) {
+  var datas = { user_id: userID, user_name: userName, user_pw: password, user_phone: phoneNum, user_email: email, user_address: address, created_date: DateTime };
+  connection.query('INSERT INTO user SET ?', datas, function (err, result) {
     //if(err) throw err
-    if (err) console.error("err : " + err)
-    else {
+    if (err) {
+      console.error("err : " + err);
+      req.flash('error', '아이디가 이미 있었습니다!');
+      res.redirect('/auth/register');
+      return;
+    }
+    if (result) {
       req.flash('success', '성공적으로 가입했습니다!');
       res.redirect('/auth/login');
+    } else {
+      req.flash('error', '가입 실패했습니다!');
+      res.redirect('/auth/register');
     }
-  });
+  })
+
 });
 
 
