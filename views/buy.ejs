@@ -91,7 +91,7 @@
                 <a class="nav-link active" href="/auth/sell">판매</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/auth/search">시세 조회</a>
+                <a class="nav-link active" href="/auth/contact">문의하기</a>
               </li>
             </ul>
             <form action="/search" class="d-flex" role="search">
@@ -190,9 +190,22 @@
                     </tr>
                   </tbody>
               </table>
-              <form action="/auth/contact" method="get">
-              <button type="submit">문의하기</button>
-              </form>
+              <h4>댓들 <%= rows.length %></h4>
+              <table>
+                <tbody>
+                  <% for(let i = 0; i < rows.length; i++) { %>
+                    <tr>
+                      <td><p style="font-weight: 600;"><%= rows[i].user_name %></p></td>
+                      <td><p><%= rows[i].cmt_content %></p></td>
+                    </tr>
+                  <% } %>
+                </tbody>
+              </table>
+              <form action="/auth/comment" method="post">
+                <input type="hidden" name="car_id" id="car_id" value="<%= row[0].car_id %>">
+                <textarea name="cmt_content" id="cmt_content" cols="60" rows="2"></textarea>
+                <button type="submit">Comment</button>
+                </form>
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
       </div><!-- /.container -->

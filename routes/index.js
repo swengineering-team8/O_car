@@ -31,20 +31,5 @@ router.get('/', function (req, res, next) {
   });
 });
 
-router.get('/search', function (req, res) {
-  var title = req.query.title;
-
-  var sql = "SELECT * FROM car WHERE car_title LIKE '%" + title + "%'";
-
-  connection.connect(function (err) {
-    if (err) console.log("err: ", err);
-    connection.query(sql, function (err, result) {
-      if (err) console.log("err: ", err);
-      res.render('search', { title: "Search", rows: result });
-    });
-
-  });
-
-});
 
 module.exports = router;

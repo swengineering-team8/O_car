@@ -91,14 +91,15 @@
                 <a class="nav-link active" href="/auth/sell">판매</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="/auth/search">시세 조회</a>
+                <a class="nav-link active" href="/auth/contact">문의하기</a>
               </li>
             </ul>
-            <form action="/search" class="d-flex" role="search">
+            <form action="/auth/search" class="d-flex" role="search">
               <input class="form-control me-2" type="search" name="title" placeholder="모델명" aria-label="Search">
               <button class="btn btn-outline-success me-2" type="submit">Search</button>
-              <a href="/auth/login" class="btn btn-success">Login</a>
             </form>
+            <a href="/auth/detail/user/<%= name %>" class="nav-link" style="color: rgb(255, 255, 255);"><%= name %></a>
+            <a href="/" class="btn btn-success">Logout</a>
           </div>
         </div>
       </nav>
