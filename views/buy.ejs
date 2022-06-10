@@ -73,7 +73,7 @@
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link active" href="/auth">구입</a>
+                <a class="nav-link active" href="/auth/sell-list">구입</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/auth/buy/sedan">세단</a>
@@ -190,12 +190,8 @@
                     </tr>
                   </tbody>
               </table>
-              <br>
-              <p>댓글 </p>
-              <form action="/auth/buy/comment" method="get">
-              <input type="hidden" name="seller_id" id="seller_id" value="<%= row[0].seller_id %>">
-              <textarea name="comment" id="comment" cols="50" rows="10"></textarea><br>
-              <button type="submit">comment</button>
+              <form action="/auth/contact" method="get">
+              <button type="submit">문의하기</button>
               </form>
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->

@@ -49,7 +49,26 @@
       <a href="/admin/login" class="btn btn-success ml-2">로그아웃</a>
     </form>
   </div>
-
+    <h3><%= title %></h3>
+    <form action="/admin/noticetb-update-post" method="post">
+    <table>
+        <% for(let i = 0; i < rows.length; i++) { %>
+            <input type="hidden" name="notice_id" id="notice_id" value="<%= rows[i].notice_id %>">
+            <tr>
+                <td>공지 사항 제목 </td>
+                <td><input type="text" name="notice_title" id="notice_title" value="<%= rows[i].notice_title %>"></td>
+            </tr>
+            <tr>
+                <td>공지 사항 내용 </td>
+                <td><textarea name="notice_content" id="notice_content" cols="50" rows="10" placeholder="내용 작성하세요"><%= rows[i].notice_content %></textarea></td>
+            </tr>
+            <tr>
+                <td><button type="submit">다시 공지</button></td>
+            </tr>
+        <% } %>
+        
+    </table>
+    </form>
 
 </body>
 </html>

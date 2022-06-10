@@ -72,33 +72,34 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/sell-list">구입</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/sedan">세단</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/suv">SUV</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/sport">스포츠</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/truck">화물</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/sell">판매</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/search">시세 조회</a>
-              </li>
-            </ul>
+                <li class="nav-item">
+                  <a class="nav-link active" href="/auth/sell-list">구입</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/buy/sedan">세단</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/buy/suv">SUV</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/buy/sport">스포츠</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/buy/truck">화물</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="/auth/sell">판매</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="/auth/search">시세 조회</a>
+                </li>
+              </ul>
             <form action="/search" class="d-flex" role="search">
               <input class="form-control me-2" type="search" name="title" placeholder="모델명" aria-label="Search">
               <button class="btn btn-outline-success me-2" type="submit">Search</button>
             </form>
-            <a href="/auth/login" class="btn btn-success">Login</a>
+            <a href="/auth/detail/user/<%= name %>" class="nav-link" style="color: rgb(255, 255, 255);"><%= name %></a>
+            <a href="/" class="btn btn-success">Logout</a>
           </div>
         </div>
       </nav>
@@ -160,16 +161,19 @@
       <!-- Wrap the rest of the page in another container to center all the content. -->
     
       <div class="container marketing">
-        <h3>공지사항</h3>
+    
         <!-- Three columns of text below the carousel -->
-        <table>
+        <div class="row">
           <% for(let i = 0; i < rows.length; i++) { %>
-              <tr>
-                  <td><a href="/auth/noticetb-read/<%= rows[i].notice_id %>"><%= rows[i].notice_title %></a></td>
-                  <td><p><%= rows[i].notice_time %></p></td>
-              </tr>
+            <div class="col-lg-4">
+              <img class="bd-placeholder-img mb-2" height="140" src="<%= rows[i].image %>" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></img>
+              <h3 class="fw-normal mb-2"><%= rows[i].car_title %></h3>
+              <form action="/auth/buy/<%= rows[i].car_id %>" method="get">
+                <p><button type="submit" class="btn btn-secondary">자세히 보기 &raquo;</button></p>
+              </form>
+            </div><!-- /.col-lg-4 -->
           <% } %>
-      </table>
+        </div><!-- /.row -->
     
       </div><!-- /.container -->
     

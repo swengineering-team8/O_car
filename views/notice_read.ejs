@@ -49,7 +49,10 @@
       <a href="/admin/login" class="btn btn-success ml-2">로그아웃</a>
     </form>
   </div>
-
-
+  <h1><%= title %></h1>
+    <% for(let i = 0; i < rows.length; i++) { %>
+    <h3><%= rows[i].notice_title %>----<%= rows[i].notice_time %></h3>
+    <p><%= rows[i].notice_content %></p>
+    <% } %>
 </body>
 </html>
