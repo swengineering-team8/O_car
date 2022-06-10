@@ -50,7 +50,7 @@
     </form>
   </div>
     <h3>공지사항 쓰기</h3>
-    <form action="/admin/noticetb-write-post" method="post">
+    <form action="/admin/noticetb-write-post" method="post" onsubmit="return onWriteSubmit()">
     <table>
         <tr>
             <td>공지 사항 제목 </td>
@@ -65,6 +65,24 @@
         </tr>
     </table>
     </form>
-
+    <script>
+      function onWriteSubmit() {
+        if($("#notice_title").val().trim()=="")
+        {
+          $("#notice_title").val("");
+          $("#notice_title").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#notice_content").val().trim()=="")
+        {
+          $("#notice_content").val("");
+          $("#notice_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
 </body>
 </html>

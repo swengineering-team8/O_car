@@ -113,7 +113,7 @@
     
       <div class="container marketing">
         <h3>문의 사항</h3>
-      <form action="" method="post">
+      <form action="" method="post" onsubmit="return onWriteSubmit()">
         <table>
             <tr>
                 <td>문의 제목:</td>
@@ -139,6 +139,24 @@
       </footer>
     </main>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script></script>
+    <script>
+      function onWriteSubmit() {
+        if($("#contact_title").val().trim()=="")
+        {
+          $("#contact_title").val("");
+          $("#contact_title").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#contact_content").val().trim()=="")
+        {
+          $("#contact_content").val("");
+          $("#contact_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
   </body>
 </html>

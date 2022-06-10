@@ -201,7 +201,7 @@
                   <% } %>
                 </tbody>
               </table>
-              <form action="/auth/comment" method="post">
+              <form action="/auth/comment" method="post" onsubmit="return onWriteSubmit()">
                 <input type="hidden" name="car_id" id="car_id" value="<%= row[0].car_id %>">
                 <textarea name="cmt_content" id="cmt_content" cols="60" rows="2"></textarea>
                 <button type="submit">Comment</button>
@@ -217,5 +217,17 @@
       </footer>
     </main>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function onWriteSubmit() {
+        if($("#cmt_content").val().trim()=="")
+        {
+          $("#cmt_content").val("");
+          $("#cmt_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
   </body>
 </html>
