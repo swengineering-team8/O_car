@@ -181,7 +181,7 @@ router.post('/sell-post', upload.single('image'), function (req, res, next) {
   var sql = "INSERT INTO car(seller_id, car_number, car_title, car_price, car_year, car_mileage, car_fuel, car_info, image, created_date) values(?,?,?,?,?,?,?,?,?,?)";
   connection.query(sql, datas, function (err, result) {
     if (err) console.log("err: ", err);
-    res.redirect('/auth');
+    res.redirect('/auth/sell-list');
   })
 });
 
@@ -196,7 +196,6 @@ router.get('/sell-list', function (req, res, next) {
         if (err) console.log("err: ", err);
         res.render('sell_list', { title: 'O-Car', name: user_name, rows: rows });
       });
-
     });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
