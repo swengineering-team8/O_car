@@ -115,5 +115,65 @@
       <p> 2022-1 SW Engineering Team-8 </p>
     </footer>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function onWriteSubmit() {
+        if($("#car_number").val().trim()=="")
+        {
+          $("#car_number").val("");
+          $("#car_number").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#image").val().trim()=="")
+        {
+          $("#image").val("");
+          $("#image").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_title").val().trim()=="")
+        {
+          $("#car_title").val("");
+          $("#car_title").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_year").val().trim()=="")
+        {
+          $("#car_year").val("");
+          $("#car_year").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_mileage").val().trim()=="")
+        {
+          $("#car_mileage").val("");
+          $("#car_mileage").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_feul").val().trim()=="")
+        {
+          $("#car_feul").val("");
+          $("#car_feul").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_info").val().trim()=="")
+        {
+          $("#car_info").val("");
+          $("#car_info").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_price").val().trim()=="")
+        {
+          $("#car_price").val("");
+          $("#car_price").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+      }
+    </script>
   </body>
 </html>

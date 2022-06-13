@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<title><%= title %></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<style>
+  body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+<body>
+  <div class="topnav">
+    <a class="active" href="/admin">O-Car Administrator</a>
+    <a href="/admin/noticetb">공지사항 관리</a>
+    <a href="/admin/contact-list">문의 관리</a>
+    <a href="/admin/list">회원 관리</a>
+    <form action="/logout" method="get" style="margin-left: 0px;">
+      <a href="/admin/login" class="btn btn-success ml-2">로그아웃</a>
+    </form>
+  </div>
+    <h3><%= title %></h3>
+    <form action="/admin/noticetb-update-post" method="post" onsubmit="return onWriteSubmit()">
+    <table>
+        <% for(let i = 0; i < rows.length; i++) { %>
+            <input type="hidden" name="notice_id" id="notice_id" value="<%= rows[i].notice_id %>">
+            <tr>
+                <td>공지 사항 제목 </td>
+                <td><input type="text" name="notice_title" id="notice_title" value="<%= rows[i].notice_title %>"></td>
+            </tr>
+            <tr>
+                <td>공지 사항 내용 </td>
+                <td><textarea name="notice_content" id="notice_content" cols="50" rows="10" placeholder="내용 작성하세요"><%= rows[i].notice_content %></textarea></td>
+            </tr>
+            <tr>
+                <td><button type="submit">다시 공지</button></td>
+            </tr>
+        <% } %>
+        
+    </table>
+    </form>
+    <script>
+      function onWriteSubmit() {
+        if($("#notice_title").val().trim()=="")
+        {
+          $("#notice_title").val("");
+          $("#notice_title").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#notice_content").val().trim()=="")
+        {
+          $("#notice_content").val("");
+          $("#notice_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
+</body>
+</html>

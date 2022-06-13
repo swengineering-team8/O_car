@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title><%= title %></title>
+    <script src="/javascripts/jquery-3.6.0.min.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
+    <link href="/stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      .b-example-divider {
+        height: 3rem;
+        background-color: rgba(0, 0, 0, .1);
+        border: solid rgba(0, 0, 0, .15);
+        border-width: 1px 0;
+        box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+      }
+
+      .b-example-vr {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 100vh;
+      }
+
+      .bi {
+        vertical-align: -.125em;
+        fill: currentColor;
+      }
+
+      .nav-scroller {
+        position: relative;
+        z-index: 2;
+        height: 2.75rem;
+        overflow-y: hidden;
+      }
+
+      .nav-scroller .nav {
+        display: flex;
+        flex-wrap: nowrap;
+        padding-bottom: 1rem;
+        margin-top: -1px;
+        overflow-x: auto;
+        text-align: center;
+        white-space: nowrap;
+        -webkit-overflow-scrolling: touch;
+      }
+    </style>
+    <link href="/stylesheets/carousel.css" rel="stylesheet">
+  </head>
+  <body>
+    <%-include('navbar_loggedin.ejs') %>
+    <main style="margin-top: 50px;">
+        <br>
+    
+      <!-- Marketing messaging and featurettes
+      ================================================== -->
+      <!-- Wrap the rest of the page in another container to center all the content. -->
+    
+      <div class="container marketing">
+        <h3>문의 사항</h3>
+        <% if (messages.error) { %>
+          <p style="color:red"><%- messages.error %></p>
+          <% } %>
+          <% if (messages.success) { %>
+          <p style="color:green"><%- messages.success %></p>
+          <% } %>
+      <form action="/auth/contact-post" method="post" onsubmit="return onWriteSubmit()">
+        <table>
+            <tr>
+                <td>문의 제목:</td>
+                <td><input type="text" name="qst_title" id="qst_title" placeholder="제목을 작성하세요"></td>
+            </tr>
+            <tr>
+              <td>문의 내용:</td>
+              <td><textarea  name="qst_content" id="qst_content" placeholder="내용을 작성하세요" cols="50" rows="10"></textarea></td>
+          </tr>
+          <tr>
+              <td><button type="submit">문의</button></td>
+          </tr>
+        </table>
+      </form>
+    
+      </div><!-- /.container -->
+    
+    
+      <!-- FOOTER -->
+      <footer class="container">
+        <p class="float-end"><a href="#">위로 스크롤</a></p>
+        <p> 2022-1 SW Engineering Team-8 </p>
+      </footer>
+    </main>
+    <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function onWriteSubmit() {
+        if($("#qst_title").val().trim()=="")
+        {
+          $("#qst_title").val("");
+          $("#qst_title").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#qst_content").val().trim()=="")
+        {
+          $("#qst_content").val("");
+          $("#qst_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
+  </body>
+</html>
