@@ -28,10 +28,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '/public')));
 
 app.use(session({
+  key: 'sid',
   secret: '123456cat',
   resave: false,
   saveUninitialized: true,
-  cookie: { maxAge: 60000 }
+  cookie: { maxAge: 1000 * 60 * 60 } // 1 hour
 }))
 
 app.use(flash());

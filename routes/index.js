@@ -21,14 +21,14 @@ var upload = multer({ storage: storage });
 /* GET home page. */
 router.get('/', function (req, res, next) {
   var sql = "SELECT * FROM noticetb";
-  connection.connect(function (err) {
-    if (err) console.log("err: ", err);
+  // connection.connect(function (err) {
+  //   if (err) console.log("err: ", err);
     connection.query(sql, function (err, rows) {
       if (err) console.log("err: ", err);
       res.render('index', { title: 'O-Car', rows: rows });
     });
 
-  });
+  // });
 });
 
 

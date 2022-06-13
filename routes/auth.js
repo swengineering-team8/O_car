@@ -155,6 +155,7 @@ router.get('/update', function (req, res, next) {
 
 /*POST Update information of user */
 router.post('/update-post', function (req, res, next) {
+  var user_id = req.body.user_id;
   var user_name = req.body.user_name;
   var user_email = req.body.user_email;
   var user_address = req.body.user_address;
@@ -167,9 +168,9 @@ router.post('/update-post', function (req, res, next) {
   var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
   var DateTime = date + ' ' + time;
 
-  var datas = [user_name, user_phone, user_email, user_address, DateTime, user_pw];
+  var datas = [user_name, user_phone, user_email, user_address, DateTime, user_id, user_pw];
 
-  var sql = "UPDATE user SET user_name=?, user_phone=?, user_email=?, user_address=?, created_date =? WHERE user_pw=?";
+  var sql = "UPDATE user SET user_name=?, user_phone=?, user_email=?, user_address=?, created_date =? WHERE user_id=? AND user_pw=?";
 
   connection.query(sql, datas, function (err, result) {
     if (err) console.log("회원정보 수정 에러 : ", err);
@@ -224,12 +225,9 @@ router.get('/sell-list', function (req, res, next) {
 
   if (req.session.logged) {
     var sql = "SELECT * FROM car";
-    connection.connect(function (err) {
-      if (err) console.log("err: ", err);
       connection.query(sql, function (err, rows) {
         if (err) console.log("err: ", err);
         res.render('sell_list', { title: 'O-Car', name: user_name, rows: rows });
-      });
     });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -245,14 +243,11 @@ router.get('/search', function (req, res) {
 
     var sql = "SELECT * FROM car WHERE car_title LIKE '%" + title + "%'";
 
-    connection.connect(function (err) {
-      if (err) console.log("err: ", err);
       connection.query(sql, function (err, result) {
         if (err) console.log("err: ", err);
         res.render('search', { title: "Search", name: user_name, rows: result });
       });
 
-    });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
     res.redirect('/auth/login');
@@ -351,14 +346,11 @@ router.get('/', function (req, res, next) {
 
   if (req.session.logged) {
     var sql = "SELECT * FROM noticetb";
-    connection.connect(function (err) {
-      if (err) console.log("err: ", err);
       connection.query(sql, function (err, rows) {
         if (err) console.log("err: ", err);
         res.render('logged_index', { title: 'O-Car', name: user_name, rows: rows });
       });
 
-    });
   } else {
     res.redirect('/');
   }
@@ -367,6 +359,7 @@ router.get('/', function (req, res, next) {
 // Logout user
 router.get('/logout', function (req, res) {
   req.session.destroy();
+  res.clearCookie('sid');
   req.flash('success', '여기에서 다시 로그인해 주세요!');
   res.redirect('/auth/login');
 });
