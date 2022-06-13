@@ -123,5 +123,17 @@
       </footer>
     </main>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function onWriteSubmit() {
+        if($("#cmt_content").val().trim()=="")
+        {
+          $("#cmt_content").val("");
+          $("#cmt_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
   </body>
 </html>
