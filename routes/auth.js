@@ -17,8 +17,8 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage });
 
-var user_name;
-var user_id;
+var user_name = ' ';
+var user_id = 0;
 
 /* GET users listing. */
 //display login page
@@ -39,7 +39,7 @@ router.post('/authentication', function (req, res, next) {
       res.redirect('/auth/login');
     } else {//if user found
       // render to views/index.ejs template file
-      req.session.loggedin = true;
+      req.session.logged = true;
       user_name = rows[0].user_name;
       user_id = rows[0].user_id;
       res.redirect('/auth');
@@ -120,7 +120,7 @@ router.get('/update', function (req, res, next) {
 });
 
 /*POST Update information of user */
-router.post('/update', function (req, res, next) {
+router.post('/update-post', function (req, res, next) {
   var user_id = req.body.user_id;
   var user_name = req.body.user_name;
   var user_email = req.body.user_email;
@@ -150,7 +150,7 @@ router.post('/update', function (req, res, next) {
 
 //판매 페이지
 router.get('/sell', function (req, res, next) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     res.render('sell', { title: "자동차 판매 등록", name: user_name, id: user_id });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -167,7 +167,7 @@ router.post('/sell-post', upload.single('image'), function (req, res, next) {
   var car_title = req.body.car_title;
   var car_year = req.body.car_year;
   var car_mileage = req.body.car_mileage;
-  var car_fuel = req.body.car_feul;
+  var car_fuel = req.body.car_fuel;
   var car_info = req.body.car_info;
   var car_price = req.body.car_price;
 
@@ -189,7 +189,7 @@ router.post('/sell-post', upload.single('image'), function (req, res, next) {
 //판매 페이지된 페이지
 router.get('/sell-list', function (req, res, next) {
 
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var sql = "SELECT * FROM car";
       connection.query(sql, function (err, rows) {
         if (err) console.log("err: ", err);
@@ -204,7 +204,7 @@ router.get('/sell-list', function (req, res, next) {
 
 
 router.get('/search', function (req, res) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var title = req.query.title;
 
     var sql = "SELECT * FROM car WHERE car_title LIKE '%" + title + "%'";
@@ -222,7 +222,7 @@ router.get('/search', function (req, res) {
 });
 
 router.get('/buy/:id', function (req, res, next) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var car_id = req.params.id;
     var sql = "SELECT * FROM car WHERE car_id = ?";
     connection.query(sql, [car_id], function (err, row) {
@@ -239,7 +239,7 @@ router.get('/buy/:id', function (req, res, next) {
 });
 
 router.post('/comment', function (req, res, next) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var car_id = req.body.car_id;
     var cmt_content = req.body.cmt_content;
 
@@ -266,12 +266,33 @@ router.post('/comment', function (req, res, next) {
 });
 
 router.get('/contact', function (req, res, next) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     res.render('contact_us', { title: "문의하기", name: user_name });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
     res.redirect('/auth/login');
   }
+});
+
+
+router.post('/contact-post',function(req,res,next){
+  var qst_title = req.body.qst_title;
+  var qst_content = req.body.qst_content;
+
+  //문의한 날짜
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+  var qst_time = date + ' ' + time;
+
+  var data=[user_id,qst_title,qst_content,qst_time];
+  var sql = "INSERT INTO questions(user_id, qst_title, qst_content, qst_time) values(?,?,?,?)";
+  connection.query(sql,data,function(err,result){
+    if(err) console.log("err : ", err);
+    req.flash('success', '문의를 보냈습니다.');
+    res.redirect('/auth/contact');
+  });
+  
 });
 
 router.get('/noticetb-read/:id', function (req, res, next) {
@@ -289,7 +310,7 @@ router.get('/noticetb-read/:id', function (req, res, next) {
 //display home page
 router.get('/', function (req, res, next) {
 
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var sql = "SELECT * FROM noticetb";
       connection.query(sql, function (err, rows) {
         if (err) console.log("err: ", err);

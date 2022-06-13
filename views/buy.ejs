@@ -12,7 +12,7 @@
     <link href="/stylesheets/carousel.css" rel="stylesheet">
   </head>
   <body>
-    <%-include('navbar_loggedin.ejs') %>
+    <%- include('navbar_loggedin.ejs') %>
     <main>
       <div class="py-5 container">
         <div class="mx-auto my-4 row">
@@ -106,15 +106,25 @@
           </div>
         </div>
         <div class="col-md-4"><!--Buying Container-->
-
+          <p>댓글 </p>
+      <form action="/auth/comment" method="post">
+      <input type="hidden" name="car_id" id="car_id" value="<%= row[0].car_id %>">
+      <input style="height: 100px; width: 400px;" name="cmt_content" id="cmt_content" cols="50" rows="10"></input><br>
+      <button type="submit">comment</button>
+      
+        <table>
+          <% for(let i = 0; i < rows.length; i++) { %>
+            <tr>
+              <td><p style="font-weight: 600px;"><%= rows[i].user_name%></p></td>
+              <td><p><%= rows[i].cmt_content%></p></td>
+              <td><p><%= rows[i].cmt_time%></p></td>
+            </tr>
+            <% } %>
+        </table>
         </div>
       </div><!-- /.container -->
 
-      <!-- <p>댓글 </p>
-      <form action="/auth/buy/comment" method="get">
-      <input type="hidden" name="seller_id" id="seller_id" value="<%= row[0].seller_id %>">
-      <textarea name="comment" id="comment" cols="50" rows="10"></textarea><br>
-      <button type="submit">comment</button> -->
+      
     
       <!-- FOOTER -->
       <footer class="container">
