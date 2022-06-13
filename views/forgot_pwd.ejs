@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title><%= title %></title>
+    <script src="/javascripts/jquery-3.6.0.min.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
+    <link href="/stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/common.css" rel="stylesheet">
+    <link href="/stylesheets/signin.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    <main class="form-signin w-100 m-auto">
+      <img class="mb-4" src="/logo.svg" alt="" width="100" height="100">
+      <h1 class="h3 mb-3 fw-normal"><%= title %></h1>
+      <% if (messages.error) { %>
+      <p style="color:red"><%- messages.error %></p>
+      <% } %>
+      <% if (messages.success) { %>
+      <p style="color:green"><%- messages.success %></p>
+      <% } %>
+      <form action="/auth/post-forgot-pwd" method="post" name="form1" onsubmit="return onWriteSubmit()">
+        <div class="form-floating">
+          <input type="text" name="user_id" class="form-control" id="user_id" placeholder="ID">
+          <label for="userID">ID</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" name="user_pw" class="form-control" id="user_pw" placeholder="PW">
+          <label for="inputPW">New Password</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" name="checkPasswd" class="form-control" id="checkPasswd" placeholder="PW Check">
+          <label for="checkPasswd">Check Password</label>
+        </div>
+        <input class="w-100 btn btn-lg btn-primary mb-3" type="submit" value="변경하기"></input>
+      </form>
+      <script>
+        function onWriteSubmit() {
+          if($("#user_id").val().trim()=="")
+          {
+            $("#user_id").val("");
+            $("#user_id").focus();
+            alert("아이디를 꼭 입력해 주세요");
+            return false;
+          }
+          if($("#user_pw").val().trim()=="")
+          {
+            $("#user_pw").val("");
+            $("#user_pw").focus();
+            alert("새 비밀번호를 꼭 입력해 주세요");
+            return false;
+          }
+          if($("#user_pw").val().trim() != $("#checkPasswd").val().trim())
+          {
+            $("#user_pw").val("");
+            $("#user_pw").focus();
+            alert("새 비밀번호를 다시 입력해 주세요");
+            return false;
+          }
+        }
+      </script>
+    </main>
+  </body>
+</html>
