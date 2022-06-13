@@ -29,7 +29,7 @@
               <div class="col-lg-4">
                 <img class="bd-placeholder-img mb-2" height="140" src="<%= rows[i].image %>" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></img>
                 <h3 class="fw-normal mb-2"><%= rows[i].car_title %></h3>
-                <form action="/auth/car-information" method="get">
+                <form action="/auth/buy/<%= rows[i].car_id %>" method="get">
                   <input type="hidden" name="car_id" id="car_id" value="<%= rows[i].car_id %>">
                   <p><button type="submit" class="btn btn-secondary">자세히 보기 &raquo;</button></p>
                 </form>
