@@ -95,8 +95,42 @@ router.post('/post-register', function (req, res, next) {
 
 });
 
+router.get('/forgot-pwd', function (req, res, next) {
+  res.render('forgot_pwd', { title: "비밀번호를 변경하기" });
+});
+
+router.post('/post-forgot-pwd', function (req, res, next) {
+  var user_id = req.body.user_id;
+  var user_pw = req.body.user_pw;
+  var data = [user_pw, user_id];
+  var sql1 = "SELECT * FROM user WHERE user_id = ?";
+  var sql = "UPDATE user SET user_pw = ? WHERE user_id = ?";
+
+  connection.query(sql1, [user_id], function (error, row) {
+    if (error) console.log("ERR : ", error);
+    if (row.length == 0) {
+      req.flash('error', '아이디가 잘못 입력하셨습니다. 다시 확인해 주세요!!!');
+      res.redirect('/auth/forgot-pwd');
+      return;
+    } else {
+      connection.query(sql, data, function (err, result) {
+        if (err) {
+          console.log("err : ", err);
+        }
+        if (result.length == 0) {
+          req.flash('error', '아이디가 잘못 입력하셨습니다. 다시 확인해 주세요!!!');
+          res.redirect('/auth/forgot-pwd');
+          return;
+        } else {
+          req.flash('success', '비밀번호가 변경되었습니다. 로그인하세요.');
+          res.redirect('/auth/login');
+        }
+      });
+    }
+  })
 
 
+});
 
 /* Get User Page*/
 router.get('/detail/user/:user_name', function (req, res, next) {
@@ -115,7 +149,7 @@ router.get('/update', function (req, res, next) {
   var sql = "SELECT * FROM user WHERE user_id = ?";
   connection.query(sql, [user_id], function (err, rows) {
     if (err) console.log(err);
-    res.render('auth_update', { title: "회원정보 수정", row: rows[0] , name: user_name});
+    res.render('auth_update', { title: "회원정보 수정", row: rows[0], name: user_name });
   });
 });
 
@@ -275,7 +309,7 @@ router.get('/contact', function (req, res, next) {
 });
 
 
-router.post('/contact-post',function(req,res,next){
+router.post('/contact-post', function (req, res, next) {
   var qst_title = req.body.qst_title;
   var qst_content = req.body.qst_content;
 
@@ -285,14 +319,14 @@ router.post('/contact-post',function(req,res,next){
   var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
   var qst_time = date + ' ' + time;
 
-  var data=[user_id,qst_title,qst_content,qst_time];
+  var data = [user_id, qst_title, qst_content, qst_time];
   var sql = "INSERT INTO questions(user_id, qst_title, qst_content, qst_time) values(?,?,?,?)";
-  connection.query(sql,data,function(err,result){
-    if(err) console.log("err : ", err);
+  connection.query(sql, data, function (err, result) {
+    if (err) console.log("err : ", err);
     req.flash('success', '문의를 보냈습니다.');
     res.redirect('/auth/contact');
   });
-  
+
 });
 
 router.get('/noticetb-read/:id', function (req, res, next) {
