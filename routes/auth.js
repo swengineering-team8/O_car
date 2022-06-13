@@ -17,8 +17,8 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage });
 
-var user_name;
-var user_id;
+var user_name = ' ';
+var user_id = 0;
 
 /* GET users listing. */
 //display login page
@@ -277,6 +277,27 @@ router.get('/contact', function (req, res, next) {
     req.flash('success', '먼저 로그인해 주세요!');
     res.redirect('/auth/login');
   }
+});
+
+
+router.post('/contact-post',function(req,res,next){
+  var qst_title = req.body.qst_title;
+  var qst_content = req.body.qst_content;
+
+  //문의한 날짜
+  var today = new Date();
+  var date = today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+  var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
+  var qst_time = date + ' ' + time;
+
+  var data=[user_id,qst_title,qst_content,qst_time];
+  var sql = "INSERT INTO questions(user_id, qst_title, qst_content, qst_time) values(?,?,?,?)";
+  connection.query(sql,data,function(err,result){
+    if(err) console.log("err : ", err);
+    req.flash('success', '문의를 보냈습니다.');
+    res.redirect('/auth/contact');
+  });
+  
 });
 
 router.get('/noticetb-read/:id', function (req, res, next) {

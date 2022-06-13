@@ -63,47 +63,7 @@
     <link href="/stylesheets/carousel.css" rel="stylesheet">
   </head>
   <body>
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/auth"><img src="/logo.svg" alt="" width="50" height="50"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/sell-list">구입</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/sedan">세단</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/suv">SUV</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/sport">스포츠</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/truck">화물</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/sell">판매</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/contact">문의하기</a>
-              </li>
-            </ul>
-            <form action="/auth/search" class="d-flex" role="search">
-              <input class="form-control me-2" type="search" name="title" placeholder="모델명" aria-label="Search">
-              <button class="btn btn-outline-success me-2" type="submit">Search</button>
-            </form>
-            <a href="/auth/detail/user/<%= name %>" class="nav-link" style="color: rgb(255, 255, 255);"><%= name %></a>
-            <a href="/" class="btn btn-success">Logout</a>
-          </div>
-        </div>
-      </nav>
-    </header>
+    <%-include('navbar_loggedin.ejs') %>
     <main style="margin-top: 50px;">
         <br>
     
@@ -113,15 +73,21 @@
     
       <div class="container marketing">
         <h3>문의 사항</h3>
-      <form action="" method="post" onsubmit="return onWriteSubmit()">
+        <% if (messages.error) { %>
+          <p style="color:red"><%- messages.error %></p>
+          <% } %>
+          <% if (messages.success) { %>
+          <p style="color:green"><%- messages.success %></p>
+          <% } %>
+      <form action="/auth/contact-post" method="post" onsubmit="return onWriteSubmit()">
         <table>
             <tr>
                 <td>문의 제목:</td>
-                <td><input type="text" name="contact_title" id="contact_title" placeholder="제목을 작성하세요"></td>
+                <td><input type="text" name="qst_title" id="qst_title" placeholder="제목을 작성하세요"></td>
             </tr>
             <tr>
               <td>문의 내용:</td>
-              <td><textarea  name="contact_content" id="contact_content" placeholder="내용을 작성하세요" cols="50" rows="10"></textarea></td>
+              <td><textarea  name="qst_content" id="qst_content" placeholder="내용을 작성하세요" cols="50" rows="10"></textarea></td>
           </tr>
           <tr>
               <td><button type="submit">문의</button></td>
@@ -141,17 +107,17 @@
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script>
       function onWriteSubmit() {
-        if($("#contact_title").val().trim()=="")
+        if($("#qst_title").val().trim()=="")
         {
-          $("#contact_title").val("");
-          $("#contact_title").focus();
+          $("#qst_title").val("");
+          $("#qst_title").focus();
           alert("비우면 안 됩니다!!");
           return false;
         }
-        if($("#contact_content").val().trim()=="")
+        if($("#qst_content").val().trim()=="")
         {
-          $("#contact_content").val("");
-          $("#contact_content").focus();
+          $("#qst_content").val("");
+          $("#qst_content").focus();
           alert("비우면 안 됩니다!!");
           return false;
         }

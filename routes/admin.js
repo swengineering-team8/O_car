@@ -7,7 +7,7 @@ var connection = require('../models/database');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
-    if (!req.session.loggedin) {
+    if (!req.session.logged) {
         res.redirect('/admin/login');
     } else {
         res.render('admin', { title: 'Administrator' });
@@ -17,7 +17,7 @@ router.get('/', function (req, res, next) {
 /* GET Login page. */
 router.get('/login', function (req, res, next) {
     res.render('adminLogin', { title: 'Administrator Login', userID: '', password: '' });
-    req.session.loggedin = false;
+    req.session.logged = false;
 });
 
 //authenticate user
@@ -28,7 +28,7 @@ router.post('/authentication', function (req, res, next) {
 
     if (userID == 'admin' && password == 'admin') {//if user found
         // render to views/index.ejs template file
-        req.session.loggedin = true;
+        req.session.logged = true;
         req.session.name = name;
         res.redirect('/admin');
     } else {
@@ -60,7 +60,7 @@ router.post('/delete-user', function (req, res, next) {
 });
 
 router.get('/list', function (req, res, next) {
-    if (req.session.loggedin) {
+    if (req.session.logged) {
         connection.query('SELECT * FROM user', function (err, rows) {
             if (err) console.error("err : " + err);
             console.log("rows : " + JSON.stringify(rows));
@@ -72,7 +72,7 @@ router.get('/list', function (req, res, next) {
 });
 
 router.get('/noticetb', function (req, res, next) {
-    if (req.session.loggedin) {
+    if (req.session.logged) {
         connection.query('SELECT * FROM noticetb', function (err, rows) {
             if (err) console.error("err : " + err);
             console.log("rows : " + JSON.stringify(rows));
@@ -84,7 +84,7 @@ router.get('/noticetb', function (req, res, next) {
 });
 
 router.get('/noticetb-write', function (req, res, next) {
-    if (req.session.loggedin) {
+    if (req.session.logged) {
         connection.query('SELECT * FROM noticetb', function (err, rows) {
             if (err) console.error("err : " + err);
             console.log("rows : " + JSON.stringify(rows));
@@ -116,7 +116,7 @@ router.post('/noticetb-write-post', function (req, res, next) {
 
 router.get('/noticetb-read/:id', function (req, res, next) {
 
-    if (req.session.loggedin) {
+    if (req.session.logged) {
         var id = req.params.id;
         var sql = "SELECT * FROM noticetb WHERE notice_id = ?"
         connection.query(sql, id, function (err, rows) {
@@ -131,7 +131,7 @@ router.get('/noticetb-read/:id', function (req, res, next) {
 
 router.get('/noticetb-update/:id', function (req, res, next) {
 
-    if (req.session.loggedin) {
+    if (req.session.logged) {
         var id = req.params.id;
         var sql = "SELECT * FROM noticetb WHERE notice_id = ?"
         connection.query(sql, id, function (err, rows) {
@@ -173,9 +173,22 @@ router.post('/noticetb-delete', function (req, res, next) {
 });
 
 router.get('/contact-list', function (req, res, next) {
-    res.render('contact_list', { title: "문의 관리" });
+    var sql = "select * from questions";
+    connection.query(sql,function(err,rows){
+        if(err) console.log('err: ', err);
+        res.render('contact_list', { title: "문의 관리" , rows: rows});
+
+    })
 });
 
+router.post('/delete-qst',function(req,res,next){
+    var qst_id = req.body.qst_id;
+    var sql = "DELETE FROM questions WHERE qst_id = ?";
+    connection.query(sql, [qst_id], function (err, result) {
+        if (err) console.log("err : ", err);
+        res.redirect('/admin/contact-list');
+    });
+})
 
 // Logout user
 router.get('/logout', function (req, res) {
