@@ -12,108 +12,13 @@
     <link href="/stylesheets/carousel.css" rel="stylesheet">
   </head>
   <body>
-<<<<<<< HEAD
-    <header>
-      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/auth"><img src="/logo.svg" alt="" width="50" height="50"></a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav me-auto mb-2 mb-md-0">
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/sell-list">구입</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/sedan">세단</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/suv">SUV</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/sport">스포츠</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="/auth/buy/truck">화물</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/sell">판매</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="/auth/contact">문의하기</a>
-              </li>
-            </ul>
-            <form action="/search" class="d-flex" role="search">
-              <input class="form-control me-2" type="search" name="title" placeholder="모델명" aria-label="Search">
-              <button class="btn btn-outline-success me-2" type="submit">Search</button>
-            </form>
-            <a href="/auth/detail/user/<%= name %>" class="nav-link" style="color: rgb(255, 255, 255);"><%= name %></a>
-            <a href="/" class="btn btn-success">Logout</a>
-          </div>
-        </div>
-      </nav>
-    </header>
-=======
     <%-include('navbar_loggedin.ejs') %>
->>>>>>> main
     <main>
       <div class="py-5 container">
         <div class="mx-auto my-4 row">
           <h3><%= row[0].car_title %></h3><!--car_title -> car_model ???-->
         </div>
         <div class="row">
-<<<<<<< HEAD
-            <div class="col-lg-4">
-              <img class="bd-placeholder-img mb-2" height="140" src="<%= row[0].image %>" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></img>
-              <h3 class="fw-normal mb-2"><%= row[0].car_title %></h3>
-              <table>
-                  <tbody>
-                    <tr>
-                        <td>가격: </td>
-                        <td><%= row[0].car_price %></td>
-                    </tr>
-                    <tr>
-                      <td>차량번호: </td>
-                      <td><%= row[0].car_number %></td>
-                      </tr>
-                    <tr>
-                      <td>연식: </td>
-                      <td><%= row[0].car_year %></td>
-                    </tr>
-                    <tr>
-                        <td>주행거리: </td>
-                        <td><%= row[0].car_mileage %></td>
-                    </tr>
-                    <tr>
-                        <td>연료: </td>
-                        <td><%= row[0].car_fuel %></td>
-                    </tr>
-                    <tr>
-                        <td>자동차 정보: </td>
-                        <td><%= row[0].car_info %></td>
-                    </tr>
-                  </tbody>
-              </table>
-              <h4>댓들 <%= rows.length %></h4>
-              <table>
-                <tbody>
-                  <% for(let i = 0; i < rows.length; i++) { %>
-                    <tr>
-                      <td><p style="font-weight: 600;"><%= rows[i].user_name %></p></td>
-                      <td><p><%= rows[i].cmt_content %></p></td>
-                    </tr>
-                  <% } %>
-                </tbody>
-              </table>
-              <form action="/auth/comment" method="post" onsubmit="return onWriteSubmit()">
-                <input type="hidden" name="car_id" id="car_id" value="<%= row[0].car_id %>">
-                <textarea name="cmt_content" id="cmt_content" cols="60" rows="2"></textarea>
-                <button type="submit">Comment</button>
-                </form>
-            </div><!-- /.col-lg-4 -->
-        </div><!-- /.row -->
-=======
           <p class="lead"><%= row[0].car_number %> | <%= row[0].car_year %> | <%= row[0].car_mileage %> | <%= row[0].car_fuel %></p>
         </div>
         <div class="">
@@ -203,7 +108,6 @@
         <div class="col-md-4"><!--Buying Container-->
 
         </div>
->>>>>>> main
       </div><!-- /.container -->
 
       <!-- <p>댓글 </p>

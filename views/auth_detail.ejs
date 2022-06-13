@@ -81,45 +81,38 @@
     <%-include('navbar_loggedin.ejs') %>
 >>>>>>> main
     <main>
-    
-      <!-- Marketing messaging and featurettes
-      ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->
-      <div id="list" class="w3-container" style="margin-top: 50px;">
-        <h2><%= title %></h2>
-        
+      <div class="py-5 col-md-8 container">
+        <h2 class="py-5 text-center">내 개인정보</h2>
         <form action="/auth/update" method="get">
-            <table class="w3-table w3-striped">
-                <input type="hidden" name="user_id" value="<%= row.user_id %>">
-              <thead>
+          <div class="col-md-8 container">
+            <table class="table">
+              <tbody>
                 <tr>
-                  <th>Name</th>
+                  <th scope="row">이름</th>
                   <td><%= row.user_name %></td>
                 </tr>
                 <tr>
-                  <th>Email</th>
+                  <th scope="row">ID</th>
+                  <td><%= row.user_id %></td>
+                </tr>
+                <tr>
+                  <th scope="row">email</th>
                   <td><%= row.user_email %></td>
                 </tr>
                 <tr>
-                  <th>Address</th>
+                  <th scope="row">주소</th>
                   <td><%= row.user_address %></td>
                 </tr>
                 <tr>
-                  <th>Phone Number</th>
+                  <th scope="row">전화번호</th>
                   <td><%= row.user_phone %></td>
                 </tr>
-              </thead>
-              <tbody>
-                    <td>
-                      <button type="submit">Edit</button>
-                    </td>
-                  </tr>
               </tbody>
             </table>
+            <input class="w-100 btn btn-lg btn-primary mb-3" type="submit" value="수정하기"></input>
+          </div>          
         </form>
-        
       </div>
-
     </main>
      <!-- FOOTER -->
      <footer class="container">
