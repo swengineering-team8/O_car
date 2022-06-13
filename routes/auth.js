@@ -100,10 +100,10 @@ router.post('/post-register', function (req, res, next) {
 router.get('/detail/user/:user_name', function (req, res, next) {
   var name = req.params.user_name;
   var sql = "SELECT * FROM user WHERE user_name = ?";
-  connection.query(sql, [name], function (err, row) {
+  connection.query(sql, [name], function (err, rows) {
     if (err) console.error(err);
-    console.log("조회 결과 확인 : ", row);
-    res.render('auth_detail', { title: "회원 정보", row: row[0] });
+    console.log("조회 결과 확인 : ", rows);
+    res.render('auth_detail', { title: "회원 정보", row: rows[0], name: name });
   });
 });
 

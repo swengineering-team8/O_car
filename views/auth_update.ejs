@@ -6,106 +6,112 @@
     <meta name="description" content="">
     <title><%= title %></title>
     <script src="/javascripts/jquery-3.6.0.min.js"></script>
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/sign-in/">
     <link href="/stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="/stylesheets/common.css" rel="stylesheet">
-    <link href="/stylesheets/carousel.css" rel="stylesheet">
+    <link href="/stylesheets/signin.css" rel="stylesheet">
   </head>
-  <body>
-    <%-include('navbar_loggedin.ejs') %>
-    <main>
-    
-      <!-- Marketing messaging and featurettes
-      ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->
-      <div id="list" class="w3-container" style="margin-top: 50px;">
-        <h2><%= title %></h2>
-        <form action="/auth/update" method="post" onsubmit="return onWriteSubmit()">
-            <input type="hidden" name="user_id" value="<%= row.user_id %>">
-            <table class="w3-table w3-striped">
-                <tbody>
-                    <tr>
-                        <td>Name</td>
-                        <td><input type="text" name="user_name" id="user_name" value="<%= row.user_name %>" required></td>
-                    </tr>
-                    <tr>
-                        <td>Email</td>
-                        <td><input type="email" name="user_email" id="user_email" value="<%= row.user_email %>" required></td>
-                    </tr>
-                    <tr>
-                        <td>Address</td>
-                        <td><input type="text" name="user_address" id="user_address" value="<%= row.user_address %>" required></td>
-                    </tr>
-                    <tr>
-                        <td>Phone Number</td>
-                        <td><input type="text" name="user_phone" id="user_phone" value="<%= row.user_phone %>" required></td>
-                    </tr>
-                    <tr>
-                        <td>Password</td>
-                        <td><input type="password" name="user_pw" id="user_pw" required></td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <button type="submit">Edit</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-      </div>
-
-    </main>
-     <!-- FOOTER -->
-     <footer class="container">
-        <p class="float-end"><a href="#">위로 스크롤</a></p>
-        <p> 2022-1 SW Engineering Team-8 </p>
-      </footer>
-    <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script>
+  <body class="text-center">
+    <main class="form-signin w-100 m-auto">
+      <img class="mb-4" src="/logo.svg" alt="" width="100" height="100">
+      <h1 class="h3 mb-3 fw-normal">Register Page</h1>
+      <% if (messages.error) { %>
+      <p style="color:red"><%- messages.error %></p>
+      <% } %>
+      <% if (messages.success) { %>
+      <p style="color:green"><%- messages.success %></p>
+      <% } %>
+      <form action="/auth/post-register" method="post" name="form1" onsubmit="return onWriteSubmit()">
+        <div class="form-floating mb-3">
+          <input type="text" name="userName" class="form-control" id="userName" value="<%= row.user_name %>" readonly>
+          <label for="userName">Name</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" name="userID" class="form-control" id="userID" value="<%= row.user_id %>" readonly>
+          <label for="userID">ID</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" name="password" class="form-control" id="password" placeholder="PW">
+          <label for="inputPW">Password</label>
+        </div>
+        <div class="form-floating">
+          <input type="password" name="checkPasswd" class="form-control" id="checkPasswd" placeholder="PW Check">
+          <label for="checkPasswd">Check Password</label>
+        </div>
+        <div class="form-floating">
+          <input type="email" name="email" class="form-control" id="email" value="<%= row.user_email %>">
+          <label for="email">e-mail</label>
+        </div>
+        <div class="form-floating">
+          <input type="text" name="address" class="form-control" id="address" value="<%= row.user_address %>">
+          <label for="address">Address</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" name="phoneNum" class="form-control" id="phoneNum" value="<%= row.user_phone %>">
+          <label for="phoneNum">Phone Number</label>
+        </div>
+        <input class="w-100 btn btn-lg btn-primary mb-3" type="submit" value="수정"></input>
+      </form>
+      <script>
         function onWriteSubmit() {
-          if($("#user_name").val().trim()=="")
+          if($("#userName").val().trim()=="")
           {
-            $("#user_name").val("");
-            $("#user_name").focus();
+            $("#userName").val("");
+            $("#userName").focus();
             alert("이름을 꼭 입력해 주세요");
             return false;
           }
-          if($("#user_email").val().trim()=="")
+          if($("#userID").val().trim()=="")
           {
-            $("#user_email").val("");
-            $("#user_email").focus();
+            $("#userID").val("");
+            $("#userID").focus();
+            alert("아이디를 꼭 입력해 주세요");
+            return false;
+          }
+          if($("#email").val().trim()=="")
+          {
+            $("#email").val("");
+            $("#email").focus();
             alert("이메일을 꼭 입력해 주세요");
             return false;
           }
-          if($("#user_address").val().trim()=="")
+          if($("#address").val().trim()=="")
           {
-            $("#user_address").val("");
-            $("#user_address").focus();
+            $("#address").val("");
+            $("#address").focus();
             alert("주소를 꼭 입력해 주세요");
             return false;
           }
-          if($("#user_pw").val().trim()=="")
+          if($("#password").val().trim()=="")
           {
-            $("#user_pw").val("");
-            $("#user_pw").focus();
-            alert("비밀번호를 꼭 입력해 주세요");
+            $("#password").val("");
+            $("#password").focus();
+            alert("새 비밀번호를 꼭 입력해 주세요");
             return false;
           }
-          if($("#user_phone").val().trim()=="")
+          if($("#password").val().trim() != $("#checkPasswd").val().trim())
           {
-            $("#user_phone").val("");
-            $("#user_phone").focus();
+            $("#password").val("");
+            $("#password").focus();
+            alert("새 비밀번호를 다시 입력해 주세요");
+            return false;
+          }
+          if($("#phoneNum").val().trim()=="")
+          {
+            $("#phoneNum").val("");
+            $("#phoneNum").focus();
             alert("전화번호를 꼭 입력해 주세요");
             return false;
           }
-          if(isNaN($("#user_phone").val().trim()))
+          if(isNaN($("#phoneNum").val().trim()))
           {
-            $("#user_phone").val();
-            $("#user_phone").focus();
+            $("#phoneNum").val();
+            $("#phoneNum").focus();
             alert("전화번호는 숫자만 입력하세요");
             return false;
           }
         }
       </script>
+    </main>
   </body>
 </html>
