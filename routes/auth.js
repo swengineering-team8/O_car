@@ -120,7 +120,7 @@ router.get('/update', function (req, res, next) {
 });
 
 /*POST Update information of user */
-router.post('/update', function (req, res, next) {
+router.post('/update-post', function (req, res, next) {
   var user_name = req.body.user_name;
   var user_email = req.body.user_email;
   var user_address = req.body.user_address;
@@ -166,7 +166,7 @@ router.post('/sell-post', upload.single('image'), function (req, res, next) {
   var car_title = req.body.car_title;
   var car_year = req.body.car_year;
   var car_mileage = req.body.car_mileage;
-  var car_fuel = req.body.car_feul;
+  var car_fuel = req.body.car_fuel;
   var car_info = req.body.car_info;
   var car_price = req.body.car_price;
 

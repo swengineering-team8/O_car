@@ -20,8 +20,8 @@
       <!-- Wrap the rest of the page in another container to center all the content. -->
       <div id="list" class="w3-container" style="margin-top: 50px;">
         <h2><%= title %></h2>
-        <form action="/auth/update" method="post" onsubmit="return onWriteSubmit()">
-            <input type="hidden" name="user_id" value="<%= row.user_id %>">
+        <form action="/auth/update-post" method="post" onsubmit="return onWriteSubmit()">
+            <input type="hidden" name="user_id" id="user_id" value="<%= row.user_id %>">
             <table class="w3-table w3-striped">
                 <tbody>
                     <tr>
