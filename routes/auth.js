@@ -39,7 +39,7 @@ router.post('/authentication', function (req, res, next) {
       res.redirect('/auth/login');
     } else {//if user found
       // render to views/index.ejs template file
-      req.session.loggedin = true;
+      req.session.logged = true;
       user_name = rows[0].user_name;
       user_id = rows[0].user_id;
       res.redirect('/auth');
@@ -115,7 +115,7 @@ router.get('/update', function (req, res, next) {
   var sql = "SELECT * FROM user WHERE user_id = ?";
   connection.query(sql, [user_id], function (err, rows) {
     if (err) console.log(err);
-    res.render('auth_update', { title: "회원정보 수정", row: rows[0] });
+    res.render('auth_update', { title: "회원정보 수정", row: rows[0] , name: user_name}) ;
   });
 });
 
@@ -149,7 +149,7 @@ router.post('/update', function (req, res, next) {
 
 //판매 페이지
 router.get('/sell', function (req, res, next) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     res.render('sell', { title: "자동차 판매 등록", name: user_name, id: user_id });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -188,7 +188,7 @@ router.post('/sell-post', upload.single('image'), function (req, res, next) {
 //판매 페이지된 페이지
 router.get('/sell-list', function (req, res, next) {
 
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var sql = "SELECT * FROM car";
     connection.connect(function (err) {
       if (err) console.log("err: ", err);
@@ -206,7 +206,7 @@ router.get('/sell-list', function (req, res, next) {
 
 
 router.get('/search', function (req, res) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var title = req.query.title;
 
     var sql = "SELECT * FROM car WHERE car_title LIKE '%" + title + "%'";
@@ -227,7 +227,7 @@ router.get('/search', function (req, res) {
 });
 
 router.get('/buy/:id', function (req, res, next) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var car_id = req.params.id;
     var sql = "SELECT * FROM car WHERE car_id = ?";
     connection.query(sql, [car_id], function (err, row) {
@@ -244,7 +244,7 @@ router.get('/buy/:id', function (req, res, next) {
 });
 
 router.post('/comment', function (req, res, next) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var car_id = req.body.car_id;
     var cmt_content = req.body.cmt_content;
 
@@ -271,7 +271,7 @@ router.post('/comment', function (req, res, next) {
 });
 
 router.get('/contact', function (req, res, next) {
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     res.render('contact_us', { title: "문의하기", name: user_name });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -294,7 +294,7 @@ router.get('/noticetb-read/:id', function (req, res, next) {
 //display home page
 router.get('/', function (req, res, next) {
 
-  if (req.session.loggedin) {
+  if (req.session.logged) {
     var sql = "SELECT * FROM noticetb";
     connection.connect(function (err) {
       if (err) console.log("err: ", err);
