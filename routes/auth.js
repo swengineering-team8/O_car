@@ -330,14 +330,17 @@ router.post('/contact-post', function (req, res, next) {
 });
 
 router.get('/noticetb-read/:id', function (req, res, next) {
-
-  var id = req.params.id;
-  var sql = "SELECT * FROM noticetb WHERE notice_id = ?"
-  connection.query(sql, id, function (err, rows) {
-    if (err) console.log("err : ", err);
-    res.render('auth_notice_read', { title: '공지사항', rows: rows });
-  });
-
+  if (req.session.logged) {
+    var id = req.params.id;
+    var sql = "SELECT * FROM noticetb WHERE notice_id = ?"
+    connection.query(sql, id, function (err, rows) {
+      if (err) console.log("err : ", err);
+      res.render('auth_notice_read', { title: '공지사항', rows: rows, name: user_name });
+    });
+  } else {
+    req.flash('success', '먼저 로그인해 주세요!');
+    res.redirect('/auth/login');
+  }
 });
 
 
