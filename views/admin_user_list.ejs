@@ -75,7 +75,7 @@
           <td><%= rows[i].user_phone %></td>
           <td>
             <form action="/admin/delete-user" method="post">
-              <input type="text" hidden value="<%= rows[i].user_id %>" name="id">
+              <input type="text" hidden value="<%= rows[i].user_id %>" name="user_id">
               <button type="submit">Delete</button>
             </form>
           </td>

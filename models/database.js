@@ -2,9 +2,9 @@ var mysql = require('mysql');
 
 //Database를 만들었으면 정보를 추가해 주세요
 var db = mysql.createConnection({
-  host: 'localhost',
+  host: 'kwseocar-mysql.ck8evyabhic9.ap-northeast-2.rds.amazonaws.com',
   user: 'root',
-  password: '1234', //'Tungbg@97',
+  password: 'ocar2022', //'Tungbg@97',
   database: 'o_car'
 });
 

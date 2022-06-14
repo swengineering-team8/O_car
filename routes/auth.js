@@ -75,7 +75,7 @@ router.post('/post-register', function (req, res, next) {
   var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
   var DateTime = date + ' ' + time;
 
-  var datas = { user_id: userID, user_user_id: user_id, name: userName, user_pw: password, user_phone: phoneNum, user_email: email, user_address: address, created_date: DateTime };
+  var datas = { user_id: userID, user_name: userName, user_pw: password, user_phone: phoneNum, user_email: email, user_address: address, created_date: DateTime };
   connection.query('INSERT INTO user SET ?', datas, function (err, result) {
     //if(err) throw err
     if (err) {
