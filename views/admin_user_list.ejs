@@ -74,8 +74,6 @@
           <td><%= rows[i].user_address %></td>
           <td><%= rows[i].user_phone %></td>
           <td>
-            <a href="/admin/detail/user/<%= rows[i].user_name %>" target="_blank">Detail</a>
-            <button type="button">Edit</button>
             <form action="/admin/delete-user" method="post">
               <input type="text" hidden value="<%= rows[i].user_id %>" name="id">
               <button type="submit">Delete</button>
