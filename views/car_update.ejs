@@ -18,58 +18,51 @@
       <main>
         <div class="py-5 text-center">
           <img class="d-block mx-auto mb-4" src="/logo.svg" alt="" width="70" height="70">
-          <h2>내 차 판매하기</h2>
+          <h2>내 차 수정하기</h2>
           <p class="lead">아래 양식을 통해 내 차를 다른 분에게 판매해보세요!</p>
         </div>
         <div class="row g-5">
-            <form action="/auth/sell-post" class="needs-validation" method="post" onsubmit="onWriteSubmit()" enctype="multipart/form-data" novalidate>
+            <form class="needs-validation" action="/auth/car-update-post" method="post" novalidate>
               <div class="row g-3">
                 <div class="col-6">
                   <label for="car_number" class="form-label">차량등록번호</label>
-                  <input type="text" class="form-control" name="car_number" id="car_number" placeholder="123가5678" value="" required>
+                  <input type="text" class="form-control" name="car_number" id="car_number" placeholder="123가5678" value="<%= row.car_number %>" required>
                   <div class="invalid-feedback">
                     차량등록번호를 입력하세요.
                   </div>
                 </div>
                 <div class="col-6">
-                  <label for="car_owner" class="form-label">차량 소유주</label>
-                  <input type="text" class="form-control" name="car_owner" id="car_owner" placeholder="" value="" required>
-                  <div class="invalid-feedback">
-                    차량 소유주를 입력하세요.
-                  </div>
-                </div>
-                <div class="col-12">
-                  <label for="car_image" class="form-label">자동차 사진</label>
-                  <input type="file" class="form-control" name="image" id="image" placeholder="" required>
-                  <div class="invalid-feedback">
-                    사진을 등록해주세요.
-                  </div>
-                </div>
-                <div class="col-6">
                   <label for="car_model" class="form-label">자동차 모델명</label>
-                  <input type="text" class="form-control" name="car_title" id="car_model" placeholder="">
+                  <input type="text" class="form-control" name="car_title" id="car_model" value="<%= row.car_title %>" placeholder="">
                   <div class="invalid-feedback">
                     모델명을 입력해주세요.
                   </div>
                 </div>
                 <div class="col-6">
                   <label for="car_year" class="form-label">자동차 연식</label>
-                  <input type="text" class="form-control" name="car_year" id="car_year" placeholder="2022" required>
+                  <input type="text" class="form-control" name="car_year" id="car_year" placeholder="2022" value="<%= row.car_year %>" required>
                   <div class="invalid-feedback">
                     연식을 입력해주세요.
                   </div>
                 </div>
                 <div class="col-6">
                   <label for="car_mileage" class="form-label">주행거리</label>
-                  <input type="text" class="form-control" name="car_mileage" id="car_mileage" placeholder="120000(km 단위 제외)" required>
+                  <input type="text" class="form-control" name="car_mileage" id="car_mileage" value="<%= row.car_mileage %>" placeholder="120000(km 단위 제외)" required>
                   <div class="invalid-feedback">
                     주행거리를 입력해주세요.
                   </div>
                 </div>
                 <div class="col-6">
+                  <label for="car_price" class="form-label">판매 희망 가격</label>
+                  <input type="text" class="form-control" name="car_price" id="car_price" placeholder="1200000(단위 제외)" value="<%= row.car_price %>" required>
+                  <div class="invalid-feedback">
+                    판매 희망 가격을 입력해주세요.
+                  </div>
+                </div>
+                <div class="col-6">
                   <label for="car_fuel" class="form-label">연료 종류</label>
-                  <select class="form-select" name="car_fuel" id="car_fuel" required>
-                    <option value="">선택...</option>
+                  <select class="form-select" id="car_fuel" name="car_fuel" required>
+                    <option value=""><%= row.car_fuel %></option>
                     <option>휘발유</option>
                     <option>경유</option>
                     <option>LPG</option>
@@ -82,19 +75,12 @@
                 </div>
                 <div class="col-12">
                   <label for="car_info" class="form-label">자동차 상태 등(자유 작성)</label>
-                  <textarea type="text" class="form-control" name="car_info" id="car_info" placeholder="오른쪽 아래 부분을 드래그하여 입력 창을 조절할 수 있습니다."></textarea>
-                </div>
-                <div class="col-6">
-                  <label for="car_price" class="form-label">판매 희망 가격</label>
-                  <input type="text" class="form-control" name="car_price" id="car_price" placeholder="1200000(단위 제외)" required>
-                  <div class="invalid-feedback">
-                    판매 희망 가격을 입력해주세요.
-                  </div>
+                  <textarea type="text" class="form-control" name="car_info" id="car_info" placeholder="오른쪽 아래 부분을 드래그하여 입력 창을 조절할 수 있습니다."><%= row.car_info %></textarea>
                 </div>
               </div>
               <hr class="my-4">
-              <input type="hidden" name="user_id" id="user_id" value="<%= user_id %>">
-              <button class="w-100 btn btn-primary btn-lg" type="submit">판매하기</button>
+              <input type="hidden" name="car_id" id="car_id" value="<%= row.car_id %>">
+              <button class="w-100 btn btn-primary btn-lg" type="submit">수정하기</button>
             </form>
         </div>
       </main>
