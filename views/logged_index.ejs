@@ -15,16 +15,24 @@
     <%-include('navbar_loggedin.ejs') %>
     <main>
       <%-include('slides.ejs') %>
-      <div class="container marketing">
-        <h3>공지사항</h3>
-        <table>
-          <% for(let i = 0; i < rows.length; i++) { %>
-              <tr>
-                  <td><a href="/auth/noticetb-read/<%= rows[i].notice_id %>"><%= rows[i].notice_title %></a></td>
-                  <td><p><%= rows[i].notice_time %></p></td>
-              </tr>
-          <% } %>
-      </table>
+      <div class="list-group w-auto container">
+        <div class="row">
+          <div class="col-md-6">
+            <h3 class="mb-5 text-center">공지사항</h3>
+            <% for(let i = 0; i < rows.length; i++) { %>
+              <a href="/auth/noticetb-read/<%= rows[i].notice_id %>" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+                <img src="/logo.svg" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+                <div class="d-flex gap-2 w-100 justify-content-between">
+                  <div>
+                    <h6 class="mb-0"><%= rows[i].notice_title %></h6>
+                    <p class="mb-0 opacity-75"><%= rows[i].notice_content %></p>
+                  </div>
+                  <small class="opacity-50 text-nowrap"><%= rows[i].notice_time %></small>
+                </div>
+              </a>
+            <% } %>
+          </div>
+        </div>
       </div>
       <%-include('footer.ejs') %>
     </main>
