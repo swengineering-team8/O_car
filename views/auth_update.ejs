@@ -23,7 +23,7 @@
       <% } %>
       <form action="/auth/post-register" method="post" name="form1" onsubmit="return onWriteSubmit()">
         <div class="form-floating mb-3">
-          <input type="text" name="userName" class="form-control" id="userName" value="<%= row.user_name %>" readonly>
+          <input type="text" name="userName" class="form-control" id="userName" value="<%= row.user_name   %>" readonly>
           <label for="userName">Name</label>
         </div>
         <div class="form-floating">

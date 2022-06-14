@@ -95,6 +95,30 @@ router.post('/post-register', function (req, res, next) {
 
 });
 
+router.get('/forgot_pwd', function(req, res, next) {
+
+  res.render('forgot_pwd', {title: '비밀번호 찾기'});
+
+});
+
+router.post('/post-pwd', function(req,res,next){
+  var user_id = req.body.userID;
+  var user_email = req.body.email;
+  var sql = "SELECT * FROM user WHERE user_id = ?";
+  var sql1 = "SELECT * FROM user WHERE user_email = ?";
+
+  connection.query(sql,[user_id],function(err,row){
+    connection.query(sql1,[user_email],function(err,row1){
+      if (err) {
+        console.log("err : ", err);
+        req.flash('error', '아이디나 이메일이 잘못 입력되었습니다.');
+      }
+
+      res.redirect('/auth/forgot_pwd');
+    });
+    
+  });
+});
 
 /* Get User Page*/
 router.get('/detail/user/:user_name', function (req, res, next) {
