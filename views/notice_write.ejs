@@ -49,33 +49,40 @@
       <a href="/admin/login" class="btn btn-success ml-2">로그아웃</a>
     </form>
   </div>
-  <h3>판매 자도차 등록 LIST</h3>
-  <table class="w3-table w3-striped">
-    <thead>
-      <tr>
-        <th>판매자</th>
-        <th>모델명</th>
-        <th>가격</th>
-        <th>등록 날짜</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for(let i = 0; i < rows.length; i++) { %>
-          <tr>
-            <td><%= rows[i].seller_id %></td>
-            <td><%= rows[i].car_title %></td>
-            <td><%= rows[i].car_price %></td>
-            <td><%= rows[i].created_date %></td>
-            <td>
-              <form action="/admin/car-delete" method="post">
-                <input type="hidden" name="car_id" value="<%= rows[i].car_id %>">
-                <input type="submit" value="삭제">
-              </form>
-            </td>
-          </tr>
-      <% } %>
-    </tbody>
-  </table>
-
+    <h3>공지사항 쓰기</h3>
+    <form action="/admin/noticetb-write-post" method="post" onsubmit="return onWriteSubmit()">
+    <table>
+        <tr>
+            <td>공지 사항 제목 </td>
+            <td><input type="text" name="notice_title" id="notice_title"></td>
+        </tr>
+        <tr>
+            <td>공지 사항 내용 </td>
+            <td><textarea name="notice_content" id="notice_content" cols="50" rows="10" placeholder="내용 작성하세요"></textarea></td>
+        </tr>
+        <tr>
+            <td><button type="submit">공지</button></td>
+        </tr>
+    </table>
+    </form>
+    <script>
+      function onWriteSubmit() {
+        if($("#notice_title").val().trim()=="")
+        {
+          $("#notice_title").val("");
+          $("#notice_title").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#notice_content").val().trim()=="")
+        {
+          $("#notice_content").val("");
+          $("#notice_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
 </body>
 </html>

@@ -12,7 +12,7 @@
     <link href="/stylesheets/carousel.css" rel="stylesheet">
   </head>
   <body>
-    <%-include('navbar_loggedin.ejs') %>
+    <%- include('navbar_loggedin.ejs') %>
     <main>
       <div class="py-5 container">
         <div class="mx-auto my-4 row">
@@ -30,7 +30,7 @@
             </div>
             <div class="carousel-inner">
               <div class="carousel-item active">
-                <img class="bd-placeholder-img" width="100%" height="100%" src="<%= row[0].car_image %>" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"></img>
+                <img class="bd-placeholder-img" width="100%" height="100%" src="<%= row[0].image %>" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"></img>
               </div>
               <!-- 이미지 개수에 따라 반복문 필요 !!! -->
               <!-- <div class="carousel-item">
@@ -71,7 +71,7 @@
                 </tr>
                 <tr>
                   <td>차량 소유주</td>
-                  <td><%= row[0].car_owner %></td>
+                  <td><%= row[0].seller_id %></td>
                 </tr>
                 <tr>
                   <td>차량 연식</td>
@@ -106,22 +106,40 @@
           </div>
         </div>
         <div class="col-md-4"><!--Buying Container-->
-
+          <p>댓글 </p>
+      <form action="/auth/comment" method="post">
+      <input type="hidden" name="car_id" id="car_id" value="<%= row[0].car_id %>">
+      <input style="height: 100px; width: 400px;" name="cmt_content" id="cmt_content" cols="50" rows="10"></input><br>
+      <button type="submit">comment</button>
+      
+        <table>
+          <% for(let i = 0; i < rows.length; i++) { %>
+            <tr>
+              <td><p style="font-weight: 600px;"><%= rows[i].user_name%></p></td>
+              <td><p><%= rows[i].cmt_content%></p></td>
+              <td><p><%= rows[i].cmt_time%></p></td>
+            </tr>
+            <% } %>
+        </table>
         </div>
       </div><!-- /.container -->
 
-      <!-- <p>댓글 </p>
-      <form action="/auth/buy/comment" method="get">
-      <input type="hidden" name="seller_id" id="seller_id" value="<%= row[0].seller_id %>">
-      <textarea name="comment" id="comment" cols="50" rows="10"></textarea><br>
-      <button type="submit">comment</button> -->
+      
     
-      <!-- FOOTER -->
-      <footer class="container">
-        <p class="float-end"><a href="#">위로 스크롤</a></p>
-        <p> 2022-1 SW Engineering Team-8 </p>
-      </footer>
+      <%-include('footer.ejs') %>
     </main>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function onWriteSubmit() {
+        if($("#cmt_content").val().trim()=="")
+        {
+          $("#cmt_content").val("");
+          $("#cmt_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
   </body>
 </html>

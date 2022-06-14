@@ -49,33 +49,32 @@
       <a href="/admin/login" class="btn btn-success ml-2">로그아웃</a>
     </form>
   </div>
-  <h3>판매 자도차 등록 LIST</h3>
-  <table class="w3-table w3-striped">
-    <thead>
-      <tr>
-        <th>판매자</th>
-        <th>모델명</th>
-        <th>가격</th>
-        <th>등록 날짜</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% for(let i = 0; i < rows.length; i++) { %>
-          <tr>
-            <td><%= rows[i].seller_id %></td>
-            <td><%= rows[i].car_title %></td>
-            <td><%= rows[i].car_price %></td>
-            <td><%= rows[i].created_date %></td>
-            <td>
-              <form action="/admin/car-delete" method="post">
-                <input type="hidden" name="car_id" value="<%= rows[i].car_id %>">
-                <input type="submit" value="삭제">
-              </form>
-            </td>
-          </tr>
-      <% } %>
-    </tbody>
-  </table>
+  <div>
+      <h3>공지사항</h3>
+        <table class="w3-table w3-striped">
+          <tbody>
+            <% for(let i = 0; i < rows.length; i++) { %>
+                <tr>
+                    <td><a href="/admin/noticetb-read/<%= rows[i].notice_id %>"><%= rows[i].notice_title %></a></td>
+                    <td><p><%= rows[i].notice_time %></p></td>
+                    <td>
+                    <form action="/admin/noticetb-update/<%= rows[i].notice_id %>" method="get">
+                        <input type="submit" value="수정">
+                    </form>
+                    <form action="/admin/noticetb-delete" method="post">
+                      <input type="hidden" name="delete_id" value="<%= rows[i].notice_id %>">
+                      <input type="submit" value="삭제">
+                    </form>
+                  </td>
+                </tr>
+            <% } %>
+          </tbody>
+        </table>
+  </div>
 
+  <form action="/admin/noticetb-write" method="get">
+    <td><input type="submit" value="공지 사항 쓰기"></td>
+  </form>
+  
 </body>
 </html>

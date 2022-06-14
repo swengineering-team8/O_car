@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <title><%= title %></title>
+    <script src="/javascripts/jquery-3.6.0.min.js"></script>
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/carousel/">
+    <link href="/stylesheets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/stylesheets/common.css" rel="stylesheet">
+    <link href="/stylesheets/carousel.css" rel="stylesheet">
+  </head>
+  <body>
+    <%-include('navbar_loggedin.ejs') %>
+    <main style="margin-top: 50px;">
+      <div class="container marketing">
+        <h3>문의 사항</h3>
+        <% if (messages.error) { %>
+          <p style="color:red"><%- messages.error %></p>
+          <% } %>
+          <% if (messages.success) { %>
+          <p style="color:green"><%- messages.success %></p>
+          <% } %>
+      <form action="/auth/contact-post" method="post" onsubmit="return onWriteSubmit()">
+        <table>
+            <tr>
+                <td>문의 제목:</td>
+                <td><input type="text" name="qst_title" id="qst_title" placeholder="제목을 작성하세요"></td>
+            </tr>
+            <tr>
+              <td>문의 내용:</td>
+              <td><textarea  name="qst_content" id="qst_content" placeholder="내용을 작성하세요" cols="50" rows="10"></textarea></td>
+          </tr>
+          <tr>
+              <td><button type="submit">문의</button></td>
+          </tr>
+        </table>
+      </form>
+      </div>
+      <%-include('footer.ejs') %>
+    </main>
+    <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function onWriteSubmit() {
+        if($("#qst_title").val().trim()=="")
+        {
+          $("#qst_title").val("");
+          $("#qst_title").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#qst_content").val().trim()=="")
+        {
+          $("#qst_content").val("");
+          $("#qst_content").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        
+      }
+    </script>
+  </body>
+</html>

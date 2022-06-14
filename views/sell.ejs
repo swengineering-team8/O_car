@@ -21,7 +21,6 @@
           <h2>내 차 판매하기</h2>
           <p class="lead">아래 양식을 통해 내 차를 다른 분에게 판매해보세요!</p>
         </div>
-    
         <div class="row g-5">
             <form class="needs-validation" novalidate>
               <div class="row g-3">
@@ -32,7 +31,6 @@
                     차량등록번호를 입력하세요.
                   </div>
                 </div>
-    
                 <div class="col-6">
                   <label for="car_owner" class="form-label">차량 소유주</label>
                   <input type="text" class="form-control" id="car_owner" placeholder="" value="" required>
@@ -40,7 +38,6 @@
                     차량 소유주를 입력하세요.
                   </div>
                 </div>
-    
                 <div class="col-12">
                   <label for="car_image" class="form-label">자동차 사진</label>
                   <input type="file" class="form-control" id="car_image" placeholder="" required>
@@ -48,15 +45,6 @@
                     사진을 등록해주세요.
                   </div>
                 </div>
-
-                <div class="col-6">
-                  <label for="car_model" class="form-label">자동차 제조사</label>
-                  <input type="text" class="form-control" id="car_model" placeholder="">
-                  <div class="invalid-feedback">
-                    제조사를 입력해주세요.
-                  </div>
-                </div>
-    
                 <div class="col-6">
                   <label for="car_model" class="form-label">자동차 모델명</label>
                   <input type="text" class="form-control" id="car_model" placeholder="">
@@ -64,7 +52,6 @@
                     모델명을 입력해주세요.
                   </div>
                 </div>
-    
                 <div class="col-6">
                   <label for="car_year" class="form-label">자동차 연식</label>
                   <input type="text" class="form-control" id="car_year" placeholder="2022" required>
@@ -72,7 +59,6 @@
                     연식을 입력해주세요.
                   </div>
                 </div>
-    
                 <div class="col-6">
                   <label for="car_mileage" class="form-label">주행거리</label>
                   <input type="text" class="form-control" id="car_mileage" placeholder="120000(km 단위 제외)" required>
@@ -80,7 +66,6 @@
                     주행거리를 입력해주세요.
                   </div>
                 </div>
-    
                 <div class="col-6">
                   <label for="car_fuel" class="form-label">연료 종류</label>
                   <select class="form-select" id="car_fuel" required>
@@ -95,12 +80,10 @@
                     연료 종류를 입력해주세요.
                   </div>
                 </div>
-    
                 <div class="col-12">
                   <label for="car_info" class="form-label">자동차 상태 등(자유 작성)</label>
                   <textarea type="text" class="form-control" id="car_info" placeholder="오른쪽 아래 부분을 드래그하여 입력 창을 조절할 수 있습니다."></textarea>
                 </div>
-    
                 <div class="col-6">
                   <label for="car_price" class="form-label">판매 희망 가격</label>
                   <input type="text" class="form-control" id="car_price" placeholder="1200000(단위 제외)" required>
@@ -109,19 +92,73 @@
                   </div>
                 </div>
               </div>
-    
               <hr class="my-4">
-    
               <button class="w-100 btn btn-primary btn-lg" type="submit">판매하기</button>
             </form>
         </div>
       </main>
     </div>
-    <!-- FOOTER -->
-    <footer class="container">
-      <p class="float-end"><a href="#">위로 스크롤</a></p>
-      <p> 2022-1 SW Engineering Team-8 </p>
-    </footer>
+    <%-include('footer.ejs') %>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+      function onWriteSubmit() {
+        if($("#car_number").val().trim()=="")
+        {
+          $("#car_number").val("");
+          $("#car_number").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#image").val().trim()=="")
+        {
+          $("#image").val("");
+          $("#image").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_title").val().trim()=="")
+        {
+          $("#car_title").val("");
+          $("#car_title").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_year").val().trim()=="")
+        {
+          $("#car_year").val("");
+          $("#car_year").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_mileage").val().trim()=="")
+        {
+          $("#car_mileage").val("");
+          $("#car_mileage").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_feul").val().trim()=="")
+        {
+          $("#car_feul").val("");
+          $("#car_feul").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_info").val().trim()=="")
+        {
+          $("#car_info").val("");
+          $("#car_info").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+        if($("#car_price").val().trim()=="")
+        {
+          $("#car_price").val("");
+          $("#car_price").focus();
+          alert("비우면 안 됩니다!!");
+          return false;
+        }
+      }
+    </script>
   </body>
 </html>

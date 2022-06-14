@@ -42,16 +42,13 @@
                 </tr>
               </tbody>
             </table>
+            <input type="hidden" name="user_id" value="<%=row.user_id%>">
             <input class="w-100 btn btn-lg btn-primary mb-3" type="submit" value="수정하기"></input>
           </div>          
         </form>
       </div>
     </main>
-     <!-- FOOTER -->
-     <footer class="container">
-        <p class="float-end"><a href="#">위로 스크롤</a></p>
-        <p> 2022-1 SW Engineering Team-8 </p>
-      </footer>
+      <%-include('footer.ejs') %>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>
