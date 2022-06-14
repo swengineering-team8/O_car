@@ -20,6 +20,11 @@ var upload = multer({ storage: storage });
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
+
+  if(req.session.logged){
+    res.redirect('/auth');
+  }
+
   var sql = "SELECT * FROM noticetb";
   connection.query(sql, function (err, rows) {
     if (err) console.log("noticetb err: ", err);
