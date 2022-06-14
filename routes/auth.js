@@ -393,10 +393,10 @@ router.post('/contact-post', function (req, res, next) {
 router.get('/noticetb-read/:id', function (req, res, next) {
   if (req.session.logged) {
     var id = req.params.id;
-    var sql = "SELECT * FROM noticetb WHERE notice_id = ?"
-    connection.query(sql, id, function (err, rows) {
+    var sql = "SELECT * FROM noticetb"
+    connection.query(sql, function (err, rows) {
       if (err) console.log("err : ", err);
-      res.render('auth_notice_read', { title: '공지사항', rows: rows, user_id: user_id, name: user_name });
+      res.render('auth_notice_read', { title: '공지사항', rows: rows, user_id: user_id, name: user_name, id: id });
     });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');

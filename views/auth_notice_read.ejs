@@ -14,11 +14,40 @@
   <body>
     <%-include('navbar_loggedin.ejs') %>
     <main style="margin-top: 50px;">
-      <div class="container marketing">
-        <h1><%= title %></h1>
+      <!-- <div class="container marketing">
+        <h3><%= title %></h3>
         <% for(let i = 0; i < rows.length; i++) { %>
         <h3><%= rows[i].notice_title %>----<%= rows[i].notice_time %></h3>
         <p><%= rows[i].notice_content %></p>
+        <% } %>
+      </div> -->
+      <div class="container col-md-8 mb-5">
+        <h6>공지사항</h6>
+        <% for(let i = 0; i < rows.length; i++) { %>
+          <% if (rows[i].notice_id == id) { %>
+            <h2><%= rows[i].notice_title %></h2>
+            <p class="mb-3">관리자 | <%= rows[i].notice_time %></p>
+            <div class="border-bottom mb-5"></div>
+            <p><%= rows[i].notice_content %></p>
+          <% } %>
+        <% } %>
+        <div class="my-5 border-bottom"></div>
+      </div>
+      <div class="mt-5 container col-md-8">
+        <h5>공지사항 목록</h5>
+      </div>
+      <div class="list-group container col-md-8">
+        <% for(let i = 0; i < rows.length; i++) { %>
+          <a href="/auth/noticetb-read/<%= rows[i].notice_id %>" class="list-group-item list-group-item-action d-flex gap-3" aria-current="true">
+            <img src="/logo.svg" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0"><%= rows[i].notice_title %></h6>
+                <p class="mb-0 opacity-75"><%= rows[i].notice_content %></p>
+              </div>
+              <small class="opacity-50 text-nowrap"><%= rows[i].notice_time %></small>
+            </div>
+          </a>
         <% } %>
       </div>
       <%-include('footer.ejs') %>

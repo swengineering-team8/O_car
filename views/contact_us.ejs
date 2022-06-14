@@ -13,30 +13,32 @@
   </head>
   <body>
     <%-include('navbar_loggedin.ejs') %>
-    <main style="margin-top: 50px;">
-      <div class="container marketing">
-        <h3>문의 사항</h3>
-        <% if (messages.error) { %>
-          <p style="color:red"><%- messages.error %></p>
+    <main>
+      <div class="container">
+        <div class="py-5 text-center">
+          <img class="d-block mx-auto mb-4" src="/logo.svg" alt="" width="70" height="70">
+          <h2>문의하기</h2>
+          <p class="lead">불편하신 사항들을 아래에 기재해주세요!</p>
+          <% if (messages.error) { %>
+            <p style="color:red"><%- messages.error %></p>
+            <% } %>
+            <% if (messages.success) { %>
+            <p style="color:green"><%- messages.success %></p>
           <% } %>
-          <% if (messages.success) { %>
-          <p style="color:green"><%- messages.success %></p>
-          <% } %>
-      <form action="/auth/contact-post" method="post" onsubmit="return onWriteSubmit()">
-        <table>
-            <tr>
-                <td>문의 제목:</td>
-                <td><input type="text" name="qst_title" id="qst_title" placeholder="제목을 작성하세요"></td>
-            </tr>
-            <tr>
-              <td>문의 내용:</td>
-              <td><textarea  name="qst_content" id="qst_content" placeholder="내용을 작성하세요" cols="50" rows="10"></textarea></td>
-          </tr>
-          <tr>
-              <td><button type="submit">문의</button></td>
-          </tr>
-        </table>
-      </form>
+        </div>
+        <div class="container col-md-8">
+          <form action="/auth/contact-post" method="post" onsubmit="return onWriteSubmit()">
+            <div class="mb-3">
+              <label for="qst_title" class="form-label">문의 제목</label>
+              <input type="text" name="qst_title" class="form-control" id="qst_title" placeholder="제목을 작성하세요">
+            </div>
+            <div class="mb-3">
+              <label for="qst_content" class="form-label">문의 내용</label>
+              <textarea type="text" name="qst_content" class="form-control" rows="5" id="qst_content" placeholder="내용을 작성하세요"></textarea>
+            </div>
+            <input class="w-100 btn btn-lg btn-primary mb-3" type="submit" value="제출하기"></input>
+          </form>
+        </div>
       </div>
       <%-include('footer.ejs') %>
     </main>
