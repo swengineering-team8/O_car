@@ -21,14 +21,15 @@ var upload = multer({ storage: storage });
 /* GET home page. */
 router.get('/', function (req, res, next) {
   var sql = "SELECT * FROM noticetb";
-  // connection.connect(function (err) {
-  //   if (err) console.log("err: ", err);
-    connection.query(sql, function (err, rows) {
-      if (err) console.log("err: ", err);
-      res.render('index', { title: 'O-Car', rows: rows });
+  connection.query(sql, function (err, rows) {
+    if (err) console.log("noticetb err: ", err);
+    var sql1 = "SELECT * FROM car";
+    connection.query(sql1, function (err, rowsc) {
+      if (err) console.log("car err: ", err);
+      res.render('index', { title: 'O-Car', rows: rows, rowsc: rowsc });
     });
+  });
 
-  // });
 });
 
 
