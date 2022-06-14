@@ -10,9 +10,23 @@ router.get('/', function (req, res, next) {
     if (!req.session.logged) {
         res.redirect('/admin/login');
     } else {
-        res.render('admin', { title: 'Administrator' });
+        var sql = "select * from car";
+        connection.query(sql, function (err, rows) {
+            if (err) console.log("err : ", err);
+            res.render('admin', { title: 'Administrator', rows: rows });
+        })
     }
 });
+
+router.post('/car-delete', function (req, res, next) {
+    var car_id = req.body.car_id;
+    console.log(car_id);
+    var sql = "DELETE FROM car WHERE car_id = ?";
+    connection.query(sql, [car_id], function (err, result) {
+        if (err) console.log("ERR: ", err);
+        res.redirect('/admin');
+    })
+})
 
 /* GET Login page. */
 router.get('/login', function (req, res, next) {
@@ -38,16 +52,6 @@ router.post('/authentication', function (req, res, next) {
     }
 });
 
-/* Get User Page*/
-router.get('/detail/user/:user_name', function (req, res, next) {
-    var user_name = req.params.user_name;
-    var sql = "SELECT * FROM user WHERE user_name = ?";
-    connection.query(sql, [user_name], function (err, row) {
-        if (err) console.error(err);
-        console.log("조회 결과 확인 : ", row);
-        res.render('detail', { title: "회원 조회", row: row[0] });
-    });
-});
 
 router.post('/delete-user', function (req, res, next) {
     var user_name = req.body.user_name;
@@ -174,14 +178,14 @@ router.post('/noticetb-delete', function (req, res, next) {
 
 router.get('/contact-list', function (req, res, next) {
     var sql = "select * from questions";
-    connection.query(sql,function(err,rows){
-        if(err) console.log('err: ', err);
-        res.render('contact_list', { title: "문의 관리" , rows: rows});
+    connection.query(sql, function (err, rows) {
+        if (err) console.log('err: ', err);
+        res.render('contact_list', { title: "문의 관리", rows: rows });
 
     })
 });
 
-router.post('/delete-qst',function(req,res,next){
+router.post('/delete-qst', function (req, res, next) {
     var qst_id = req.body.qst_id;
     var sql = "DELETE FROM questions WHERE qst_id = ?";
     connection.query(sql, [qst_id], function (err, result) {
