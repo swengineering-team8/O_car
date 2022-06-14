@@ -225,9 +225,9 @@ router.get('/sell-list', function (req, res, next) {
 
   if (req.session.logged) {
     var sql = "SELECT * FROM car";
-      connection.query(sql, function (err, rows) {
-        if (err) console.log("err: ", err);
-        res.render('sell_list', { title: 'O-Car', name: user_name, rows: rows });
+    connection.query(sql, function (err, rows) {
+      if (err) console.log("err: ", err);
+      res.render('sell_list', { title: 'O-Car', name: user_name, rows: rows });
     });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -243,10 +243,10 @@ router.get('/search', function (req, res) {
 
     var sql = "SELECT * FROM car WHERE car_title LIKE '%" + title + "%'";
 
-      connection.query(sql, function (err, result) {
-        if (err) console.log("err: ", err);
-        res.render('search', { title: "Search", name: user_name, rows: result });
-      });
+    connection.query(sql, function (err, result) {
+      if (err) console.log("err: ", err);
+      res.render('search', { title: "Search", name: user_name, rows: result });
+    });
 
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -349,10 +349,10 @@ router.get('/', function (req, res, next) {
 
   if (req.session.logged) {
     var sql = "SELECT * FROM noticetb";
-      connection.query(sql, function (err, rows) {
-        if (err) console.log("err: ", err);
-        res.render('logged_index', { title: 'O-Car', name: user_name, rows: rows });
-      });
+    connection.query(sql, function (err, rows) {
+      if (err) console.log("err: ", err);
+      res.render('logged_index', { title: 'O-Car', name: user_name, rows: rows });
+    });
 
   } else {
     res.redirect('/');
