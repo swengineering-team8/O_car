@@ -411,8 +411,12 @@ router.get('/', function (req, res, next) {
   if (req.session.logged) {
     var sql = "SELECT * FROM noticetb";
     connection.query(sql, function (err, rows) {
-      if (err) console.log("err: ", err);
-      res.render('logged_index', { title: 'O-Car', user_id: user_id, user_id: user_id, name: user_name, rows: rows });
+      if (err) console.log("noticetb err: ", err);
+      var sql1 = "SELECT * FROM car";
+      connection.query(sql1, function (err, rowsc) {
+        if (err) console.log("car err: ", err);
+        res.render('logged_index', { title: 'O-Car', user_id: user_id, user_id: user_id, name: user_name, rows: rows, rowsc: rowsc });
+      });
     });
 
   } else {

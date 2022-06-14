@@ -30,6 +30,17 @@
               </div>
             </a>
           <% } %>
+          <h3 class="mb-5 text-center">최근 등록</h3>
+            <% rowsc.reverse() %>
+            <% for(let i = 0; i < 2; i++) { %>
+              <div class="col-lg-4">
+                <img class="bd-placeholder-img mb-2" height="140" src="<%= rowsc[i].image %>" role="img" aria-label="Placeholder: 140x140" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/></img>
+                <h3 class="fw-normal mb-2"><%= rowsc[i].car_title %></h3>
+                <form action="/auth/buy/<%= rowsc[i].car_id %>" method="get">
+                  <p><button type="submit" class="btn btn-secondary">자세히 보기 &raquo;</button></p>
+                </form>
+              </div>
+            <% } %>
         </div>
       </div>
       <%-include('footer.ejs') %>
