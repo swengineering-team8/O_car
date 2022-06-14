@@ -426,9 +426,15 @@ router.get('/', function (req, res, next) {
 
 // Logout user
 router.get('/logout', function (req, res) {
-  req.session.destroy();
-  res.clearCookie('sid');
-  req.flash('success', '여기에서 다시 로그인해 주세요!');
-  res.redirect('/auth/login');
+  if (req.session.logged) {
+    console.log('User logout');
+    req.session.destroy(function(err){
+        if(err) console.log("err : ", err);
+        console.log('Success');
+        res.redirect('/auth/login');
+    });
+  } else {
+      res.redirect('/auth/login');
+  }
 });
 module.exports = router;
