@@ -12,11 +12,8 @@
     <link href="/stylesheets/carousel.css" rel="stylesheet">
   </head>
   <body>
-    <%-include('navbar.ejs') %>
+    <%-include('navbar_loggedin.ejs') %>
     <main>
-      <!-- Marketing messaging and featurettes
-      ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->
       <div class="mb-2"></div>
       <div class="py-5 text-center">
         <h2>차종 검색</h2>
@@ -33,20 +30,14 @@
                   <input type="hidden" name="car_id" id="car_id" value="<%= rows[i].car_id %>">
                   <p><button type="submit" class="btn btn-secondary">자세히 보기 &raquo;</button></p>
                 </form>
-              </div><!-- /.col-lg-4 -->
+              </div>
             <% } %>
-        <% } else { %>
-              <h1>Data Not Found</h1>
-        <% } %>
-        </div><!-- /.row -->
-      </div><!-- /.container -->
-    
-    
-      <!-- FOOTER -->
-      <footer class="container">
-        <p class="float-end"><a href="#">위로 스크롤</a></p>
-        <p> 2022-1 SW Engineering Team-8 </p>
-      </footer>
+          <% } else { %>
+            <h1>Data Not Found</h1>
+          <% } %>
+        </div>
+      </div>
+      <%-include('footer.ejs') %>
     </main>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>

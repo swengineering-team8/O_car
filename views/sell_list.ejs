@@ -14,16 +14,8 @@
   <body>
     <%-include('navbar_loggedin.ejs') %>
     <main>
-
-      <%-include('slides.ejs') %>    
-    
-      <!-- Marketing messaging and featurettes
-      ================================================== -->
-      <!-- Wrap the rest of the page in another container to center all the content. -->
-    
+      <%-include('slides.ejs') %>
       <div class="container marketing">
-    
-        <!-- Three columns of text below the carousel -->
         <div class="row">
           <% for(let i = 0; i < rows.length; i++) { %>
             <div class="col-lg-4">
@@ -32,18 +24,11 @@
               <form action="/auth/buy/<%= rows[i].car_id %>" method="get">
                 <p><button type="submit" class="btn btn-secondary">자세히 보기 &raquo;</button></p>
               </form>
-            </div><!-- /.col-lg-4 -->
+            </div>
           <% } %>
-        </div><!-- /.row -->
-    
-      </div><!-- /.container -->
-    
-    
-      <!-- FOOTER -->
-      <footer class="container">
-        <p class="float-end"><a href="#">위로 스크롤</a></p>
-        <p> 2022-1 SW Engineering Team-8 </p>
-      </footer>
+        </div>
+      </div>
+      <%-include('footer.ejs') %>
     </main>
     <script src="/stylesheets/bootstrap/js/bootstrap.bundle.min.js"></script>
   </body>
