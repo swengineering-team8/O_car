@@ -10,7 +10,7 @@ var storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, 'public/images/');
   },
-  filename: function (req, file, cb) {
+  fileuser_id: user_id, name: function (req, file, cb) {
     const ext = path.extname(file.originalname);
     cb(null, path.basename(file.originalname, ext) + "-" + Date.now() + ext);
   },
@@ -53,7 +53,7 @@ router.get('/register', function (req, res, next) {
   // render to views/register.ejs
   res.render('register', {
     title: 'Registration Page',
-    name: '',
+    user_id: user_id, name: '',
     userID: '',
     password: ''
   });
@@ -75,7 +75,7 @@ router.post('/post-register', function (req, res, next) {
   var time = today.getHours() + ':' + today.getMinutes() + ':' + today.getSeconds();
   var DateTime = date + ' ' + time;
 
-  var datas = { user_id: userID, user_name: userName, user_pw: password, user_phone: phoneNum, user_email: email, user_address: address, created_date: DateTime };
+  var datas = { user_id: userID, user_user_id: user_id, name: userName, user_pw: password, user_phone: phoneNum, user_email: email, user_address: address, created_date: DateTime };
   connection.query('INSERT INTO user SET ?', datas, function (err, result) {
     //if(err) throw err
     if (err) {
@@ -139,7 +139,68 @@ router.get('/detail/user/:user_name', function (req, res, next) {
   connection.query(sql, [name], function (err, rows) {
     if (err) console.error(err);
     console.log("조회 결과 확인 : ", rows);
-    res.render('auth_detail', { title: "회원 정보", row: rows[0], name: name });
+    res.render('auth_detail', { title: "회원 정보", row: rows[0], user_id: user_id, name: name });
+  });
+});
+
+router.get('/car-list/:user_id', function (req, res, next) {
+  if (req.session.logged) {
+    var seller_id = req.params.user_id;
+    var sql = "SELECT * FROM car WHERE seller_id = ?";
+    connection.query(sql, [seller_id], function (err, rows) {
+      if (err) console.error(err);
+      console.log("조회 결과 확인 : ", rows);
+      res.render('auth_car_list', { title: "등록 조회", rows: rows, user_id: user_id, name: user_name });
+    });
+  } else {
+    res.redirect('/auth/login');
+  }
+});
+
+router.post('/car-delete', function (req, res, next) {
+  var car_id = req.body.car_id;
+  console.log(car_id);
+  var sql = "DELETE FROM car WHERE car_id = ?";
+  connection.query(sql, [car_id], function (err, result) {
+    if (err) console.log("ERR: ", err);
+    req.flash('success', '먼저 로그인해 주세요!');
+    res.redirect('/auth/car-list/' + user_id);
+  });
+});
+
+/*GET Update information of user */
+router.get('/car-update/:car_id', function (req, res, next) {
+  if (req.session.logged) {
+    var car_id = req.params.car_id;
+    var sql = "SELECT * FROM car WHERE car_id = ?";
+    connection.query(sql, [car_id], function (err, row) {
+      if (err) console.log(err);
+      res.render('car_update', { title: "판매정보 수정", row: row[0], user_id: user_id, name: user_name });
+    });
+  } else {
+    req.flash('success', '먼저 로그인해 주세요!');
+    res.redirect('/auth/login');
+  }
+});
+
+/*POST Update information of user */
+router.post('/car-update-post', function (req, res, next) {
+  var car_id = req.body.car_id;
+  var car_number = req.body.car_number;
+  var car_title = req.body.car_title;
+  var car_price = req.body.car_price;
+  var car_year = req.body.car_year;
+  var car_mileage = req.body.car_mileage;
+  var car_fuel = req.body.car_fuel;
+  var car_info = req.body.car_info;
+
+  var datas = [car_number, car_title, car_price, car_year, car_mileage, car_fuel, car_info, car_id];
+
+  var sql = "UPDATE car SET car_number=?, car_title=?, car_price=?, car_year=?, car_mileage=?, car_fuel=?, car_info=? WHERE car_id=?";
+
+  connection.query(sql, datas, function (err, result) {
+    if (err) console.log("회원정보 수정 에러 : ", err);
+    res.redirect('/auth/car-list/' + user_id);
   });
 });
 
@@ -149,7 +210,7 @@ router.get('/update', function (req, res, next) {
   var sql = "SELECT * FROM user WHERE user_id = ?";
   connection.query(sql, [user_id], function (err, rows) {
     if (err) console.log(err);
-    res.render('auth_update', { title: "회원정보 수정", row: rows[0], name: user_name });
+    res.render('auth_update', { title: "회원정보 수정", row: rows[0], user_id: user_id, name: user_name });
   });
 });
 
@@ -185,7 +246,7 @@ router.post('/update-post', function (req, res, next) {
 //판매 페이지
 router.get('/sell', function (req, res, next) {
   if (req.session.logged) {
-    res.render('sell', { title: "자동차 판매 등록", name: user_name, id: user_id });
+    res.render('sell', { title: "자동차 판매 등록", user_id: user_id, name: user_name, id: user_id });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
     res.redirect('/auth/login');
@@ -195,15 +256,15 @@ router.get('/sell', function (req, res, next) {
 
 //판매 페이지
 router.post('/sell-post', upload.single('image'), function (req, res, next) {
-  var seller_id = req.body.user_id;
-  var car_number = req.body.car_number;
-  var image = `/images/${req.file.filename}`;
-  var car_title = req.body.car_title;
-  var car_year = req.body.car_year;
-  var car_mileage = req.body.car_mileage;
-  var car_fuel = req.body.car_fuel;
-  var car_info = req.body.car_info;
-  var car_price = req.body.car_price;
+  var seller_id = req.body.user_id || req.query.user_id;
+  var car_number = req.body.car_number || req.query.car_number;
+  var image = `/images/${req.file.filename || req.query.filename}`;
+  var car_title = req.body.car_title || req.query.car_title;
+  var car_year = req.body.car_year || req.query.car_year;
+  var car_mileage = req.body.car_mileage || req.query.car_mileage;
+  var car_fuel = req.body.car_fuel || req.query.car_fuel;
+  var car_info = req.body.car_info || req.query.car_info;
+  var car_price = req.body.car_price || req.query.car_price;
 
   //차 판매 등록 날짜
   var today = new Date();
@@ -225,9 +286,9 @@ router.get('/sell-list', function (req, res, next) {
 
   if (req.session.logged) {
     var sql = "SELECT * FROM car";
-      connection.query(sql, function (err, rows) {
-        if (err) console.log("err: ", err);
-        res.render('sell_list', { title: 'O-Car', name: user_name, rows: rows });
+    connection.query(sql, function (err, rows) {
+      if (err) console.log("err: ", err);
+      res.render('sell_list', { title: 'O-Car', user_id: user_id, name: user_name, rows: rows });
     });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -243,10 +304,10 @@ router.get('/search', function (req, res) {
 
     var sql = "SELECT * FROM car WHERE car_title LIKE '%" + title + "%'";
 
-      connection.query(sql, function (err, result) {
-        if (err) console.log("err: ", err);
-        res.render('search', { title: "Search", name: user_name, rows: result });
-      });
+    connection.query(sql, function (err, result) {
+      if (err) console.log("err: ", err);
+      res.render('search', { title: "Search", user_id: user_id, name: user_name, rows: result });
+    });
 
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -263,7 +324,7 @@ router.get('/buy/:id', function (req, res, next) {
       var sql_cmt = "SELECT * FROM comments WHERE car_id = ?";
       connection.query(sql_cmt, [car_id], function (err, rows) {
         if (err) console.log(err);
-        res.render('buy', { title: "자동차", name: user_name, row: row, rows: rows });
+        res.render('buy', { title: "자동차", user_id: user_id, name: user_name, row: row, rows: rows });
       });
     });
   } else {
@@ -301,7 +362,7 @@ router.post('/comment', function (req, res, next) {
 
 router.get('/contact', function (req, res, next) {
   if (req.session.logged) {
-    res.render('contact_us', { title: "문의하기", name: user_name });
+    res.render('contact_us', { title: "문의하기", user_id: user_id, name: user_name });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
     res.redirect('/auth/login');
@@ -335,7 +396,7 @@ router.get('/noticetb-read/:id', function (req, res, next) {
     var sql = "SELECT * FROM noticetb WHERE notice_id = ?"
     connection.query(sql, id, function (err, rows) {
       if (err) console.log("err : ", err);
-      res.render('auth_notice_read', { title: '공지사항', rows: rows, name: user_name });
+      res.render('auth_notice_read', { title: '공지사항', rows: rows, user_id: user_id, name: user_name });
     });
   } else {
     req.flash('success', '먼저 로그인해 주세요!');
@@ -349,10 +410,10 @@ router.get('/', function (req, res, next) {
 
   if (req.session.logged) {
     var sql = "SELECT * FROM noticetb";
-      connection.query(sql, function (err, rows) {
-        if (err) console.log("err: ", err);
-        res.render('logged_index', { title: 'O-Car', name: user_name, rows: rows });
-      });
+    connection.query(sql, function (err, rows) {
+      if (err) console.log("err: ", err);
+      res.render('logged_index', { title: 'O-Car', user_id: user_id, user_id: user_id, name: user_name, rows: rows });
+    });
 
   } else {
     res.redirect('/');

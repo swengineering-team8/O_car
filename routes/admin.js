@@ -25,8 +25,8 @@ router.post('/car-delete', function (req, res, next) {
     connection.query(sql, [car_id], function (err, result) {
         if (err) console.log("ERR: ", err);
         res.redirect('/admin');
-    })
-})
+    });
+});
 
 /* GET Login page. */
 router.get('/login', function (req, res, next) {

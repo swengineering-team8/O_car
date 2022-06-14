@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<title><%= title %></title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<style>
+  body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+<body>
+    <%-include('navbar_loggedin.ejs') %>
+   <main>
+    <br><br>
+    <h3>판매 자도차 등록 LIST</h3>
+    <table class="w3-table w3-striped">
+      <thead>
+        <tr>
+          <th>모델명</th>
+          <th>가격</th>
+          <th>내용</th>
+          <th>등록 날짜</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% for(let i = 0; i < rows.length; i++) { %>
+            <tr>
+              <td><%= rows[i].car_title %></td>
+              <td><%= rows[i].car_price %></td>
+              <td><%= rows[i].car_info %></td>
+              <td><%= rows[i].created_date %></td>
+              <td>
+                <a href="/auth/car-update/<%= rows[i].car_id %>">수정</a>
+                <form action="/auth/car-delete" method="post">
+                  <input type="hidden" name="car_id" value="<%= rows[i].car_id %>">
+                  <input type="submit" value="삭제">
+                </form>
+              </td>
+            </tr>
+        <% } %>
+      </tbody>
+    </table>
+   </main>
+
+</body>
+</html>
